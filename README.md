@@ -15,7 +15,7 @@
 
 
 - # State Management
-- Intergration parts of BloC :- 
+- Integration parts of BloC :- 
 - https://bloclibrary.dev/#/flutterfirebaselogintutorial?id=login-cubit
 
 
