@@ -10,7 +10,7 @@ abstract class NetWork {
   static Dio get _dio {
     final _dio = Dio(
       BaseOptions(
-        baseUrl: 'http://smith-restaurants.com/api/',
+        baseUrl: 'https://www.elmanhg.com/wp-json/wp/v2',
         contentType: 'application/json',
         headers: {
           'accept': 'application/json',

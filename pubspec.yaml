@@ -51,6 +51,8 @@ dependencies:
   html: ^0.15.0
   url_launcher: ^6.0.17
   get: ^4.6.1
+  equatable: ^2.0.3
+  flutter_bloc: ^7.3.3
 
 
 

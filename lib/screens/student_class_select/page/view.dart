@@ -1,10 +1,13 @@
+import 'package:almanhaj/screens/student_class_select/cubit/stages_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:almanhaj/screens/components/constants.dart';
 import 'package:almanhaj/screens/components/customButton.dart';
 import 'package:almanhaj/screens/components/default_button.dart';
 import 'package:almanhaj/screens/notify_study_timing/view.dart';
 import 'package:almanhaj/screens/student_class_select/page/views/bar_description.dart';
-import 'package:almanhaj/screens/student_class_select/page/views/class_card.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'card_selection/class_card.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,45 +25,81 @@ class _StudentClassSelectViewState extends State<StudentClassSelectView> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: kHomeColor,
-        body: SingleChildScrollView(
-          child: SizedBox(
-            height: height,
-            width: width,
-            child: Column(
-              children: [
-                BarDescription(
-                  "assets/image/logo2021-2.png",
-                  "اختر الصفوف التي ترغب في دراستها",
-                  "(يمكنك اختيار أكثر من صف )",
-                ),
-                Directionality(
-                  textDirection: TextDirection.rtl,
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: width * 0.1),
-                    // color: Colors.red,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          "المرحلة الابتدائيه : ",
-                          style: headingStyle.copyWith(
-                              color: HexColor("#3080D1"), fontSize: 25),
-                        ),
-                        CardSection(),
-                      ],
-                    ),
+        body: ListView(
+          physics: const BouncingScrollPhysics(),
+          children: [
+            SizedBox(
+              height: height,
+              width: width,
+              child: Column(
+                children: [
+                  BarDescription(
+                    "assets/image/logo2021-2.png",
+                    "اختر الصفوف التي ترغب في دراستها",
+                    "(يمكنك اختيار أكثر من صف )",
                   ),
-                ),
-                SizedBox(
-                  height: height * 0.04,
-                ),
-                DefaultButton(
-                    text: "تأكيد ابدء تصفح المذكرات الان",
-                    press: () {
-                      Get.offAll(() => NotifyStudyTimingView());
+                  BlocConsumer<StagesCubit, StagesState>(
+                    listener: (context, state) {},
+                    builder: (context, state) {
+                      if (state is StagesLoading) {
+                        return const Center(
+                            child: SpinKitChasingDots(
+                          color: kPrimaryBlueColor,
+                          size: 40,
+                        ));
+                      }
+                      if (state is StagesSuccess) {
+                        return SizedBox(
+                          height: height * 0.55,
+                          child: Expanded(
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: state.stages.length,
+                              itemBuilder: (context, index) {
+                                return Directionality(
+                                  textDirection: TextDirection.rtl,
+                                  child: Container(
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: width * 0.1),
+                                    // color: Colors.red,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text(
+                                          state.stages[index].name!,
+                                          style: headingStyle.copyWith(
+                                              color: HexColor("#3080D1"),
+                                              fontSize: 25),
+                                        ),
+                                        CardSection(
+                                            id: state.stages[index].id!),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        );
+                      }
+                      if (state is StagesError) {
+                        return Center(child: Text(state.msg));
+                      }
+                      return const SizedBox();
+                    },
+                  ),
+                  SizedBox(
+                    height: height * 0.04,
+                  ),
+                  DefaultButton(
+                      text: "تأكيد ابدء تصفح المذكرات الان",
+                      press: () {
+                        Get.offAll(() => NotifyStudyTimingView());
 
-                      /*
+                        /*
                       showMyDialog(
                                 context: context,
                                 title: "",
@@ -102,10 +141,11 @@ class _StudentClassSelectViewState extends State<StudentClassSelectView> {
                                     )
                                   ],
                                 ));*/
-                    }),
-              ],
+                      }),
+                ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

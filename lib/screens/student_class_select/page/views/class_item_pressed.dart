@@ -3,8 +3,9 @@ import 'package:almanhaj/screens/components/constants.dart';
 // ignore: use_key_in_widget_constructors, must_be_immutable
 class ClassItemPressed extends StatefulWidget {
    bool isPrssed ;
+   final String name ;
 
-  ClassItemPressed({this.isPrssed=false});
+  ClassItemPressed({Key? key, this.isPrssed=false, required this.name}) : super(key: key);
 
   @override
   State<ClassItemPressed> createState() => _ClassItemPressedState();
@@ -60,7 +61,7 @@ class _ClassItemPressedState extends State<ClassItemPressed> {
             ),
             spaceW(12),
             Text(
-              "الصف الاول الابتدائي",
+              widget.name,
               style: headingStyle.copyWith(
                   color:  HexColor("#323232"),
                   fontSize: 25),

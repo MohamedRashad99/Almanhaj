@@ -1,4 +1,7 @@
+import 'package:almanhaj/screens/student_class_select/cubit/stages_cubit.dart';
+import 'package:almanhaj/screens/student_class_select/page/card_selection/cubit/card_selection_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 import 'package:queen_themes/queen_themes.dart';
@@ -21,20 +24,25 @@ class Almanhaj extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      builder: (context, child) {
-        // TODo:: This Not Fair
-        return Directionality(
-          textDirection: TextDirection.ltr,
-          child: child ?? const SizedBox(),
-        );
-      },
-      locale: Nations.locale,
-      localizationsDelegates: Nations.delegates,
-      supportedLocales: Nations.supportedLocales,
-      theme: QTheme.current,
-      home: const SplashScreen(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => StagesCubit(),),
+      ],
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        builder: (context, child) {
+          // TODo:: This Not Fair
+          return Directionality(
+            textDirection: TextDirection.ltr,
+            child: child ?? const SizedBox(),
+          );
+        },
+        locale: Nations.locale,
+        localizationsDelegates: Nations.delegates,
+        supportedLocales: Nations.supportedLocales,
+        theme: QTheme.current,
+        home: const SplashScreen(),
+      ),
     );
   }
 }
