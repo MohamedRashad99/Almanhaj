@@ -19,4 +19,5 @@
 - https://bloclibrary.dev/#/flutterfirebaselogintutorial?id=login-cubit
 
 
-
+- local Notification 
+- { Reso Coder } => https://resocoder.com/2021/08/13/flutter-awesome-notifications-create-local-notifications-with-ease/
