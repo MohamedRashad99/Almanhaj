@@ -12,3 +12,11 @@
 - maintainable projects
 - easy to use features out of the box
 - take care of the redundant features which lets you focus more on the requirements
+
+
+- # State Management
+- Integration parts of BloC :- 
+- https://bloclibrary.dev/#/flutterfirebaselogintutorial?id=login-cubit
+
+
+
