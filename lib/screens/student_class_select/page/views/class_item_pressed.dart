@@ -1,11 +1,13 @@
+import 'package:almanhaj/local_storage/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:almanhaj/screens/components/constants.dart';
 // ignore: use_key_in_widget_constructors, must_be_immutable
 class ClassItemPressed extends StatefulWidget {
    bool isPrssed ;
    final String name ;
+   final int id ;
 
-  ClassItemPressed({Key? key, this.isPrssed=false, required this.name}) : super(key: key);
+  ClassItemPressed({Key? key, this.isPrssed=false, required this.name, required this.id}) : super(key: key);
 
   @override
   State<ClassItemPressed> createState() => _ClassItemPressedState();
@@ -20,6 +22,7 @@ class _ClassItemPressedState extends State<ClassItemPressed> {
       onTap: (){
         setState(() {
           widget.isPrssed=!widget.isPrssed;
+          LocalStorage.setString('selectedClassesId', '${widget.id}');
 
         });
       },

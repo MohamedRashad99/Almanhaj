@@ -25,7 +25,7 @@ class CardSection extends StatelessWidget {
               shrinkWrap: true,
               itemCount: state.classes.length,
               itemBuilder: (BuildContext context, int index) {
-                return ClassItemPressed(name: state.classes[index].name!);
+                return ClassItemPressed(id: state.classes[index].id!,name: state.classes[index].name!);
               },
 
 

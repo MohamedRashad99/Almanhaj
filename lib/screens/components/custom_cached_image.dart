@@ -41,6 +41,7 @@ customCachedNetworkImage(
                   ),
                   Text(
                     title,
+                    textDirection: TextDirection.rtl,
                     textAlign: TextAlign.center,
                     style: headingStyle.copyWith(
                         fontSize: 14,

@@ -4,7 +4,7 @@ import 'package:almanhaj/screens/banner_details/page/views/ads_spaces.dart';
 import 'package:almanhaj/screens/list_of_selected_course/view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'page/views/banner_slider.dart';
+import 'page/views/banner_slider/banner_slider.dart';
 import '../components/appBar.dart';
 import '../components/constants.dart';
 import 'page/views/menue_items.dart';

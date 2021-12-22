@@ -1,3 +1,5 @@
+import 'package:almanhaj/local_storage/local_storage.dart';
+import 'package:almanhaj/screens/home_screen/page/views/banner_slider/cubit/slider_cubit.dart';
 import 'package:almanhaj/screens/student_class_select/cubit/stages_cubit.dart';
 import 'package:almanhaj/screens/student_class_select/page/card_selection/cubit/card_selection_cubit.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +13,9 @@ import 'generated/tr.dart';
 import 'screens/splash_screen/view.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Nations.boot();
-
+  await LocalStorage.boot();
   await QTheme.boot(ThemeConfig());
   runApp(NationsBuilder(builder: (context) {
     return const Almanhaj();
@@ -27,6 +30,8 @@ class Almanhaj extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => StagesCubit(),),
+        BlocProvider(create: (context) => SliderCubit(),),
+
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,

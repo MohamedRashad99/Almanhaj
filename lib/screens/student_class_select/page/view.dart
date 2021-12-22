@@ -1,16 +1,14 @@
-import 'package:almanhaj/screens/student_class_select/cubit/stages_cubit.dart';
+import 'package:almanhaj/config/keys.dart';
+import '../cubit/stages_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:almanhaj/screens/components/constants.dart';
-import 'package:almanhaj/screens/components/customButton.dart';
-import 'package:almanhaj/screens/components/default_button.dart';
-import 'package:almanhaj/screens/notify_study_timing/view.dart';
-import 'package:almanhaj/screens/student_class_select/page/views/bar_description.dart';
+import '../../components/constants.dart';
+import '../../components/default_button.dart';
+import '../../notify_study_timing/view.dart';
+import 'views/bar_description.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'card_selection/class_card.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 // ignore: use_key_in_widget_constructors
 class StudentClassSelectView extends StatefulWidget {
   @override
@@ -20,6 +18,7 @@ class StudentClassSelectView extends StatefulWidget {
 class _StudentClassSelectViewState extends State<StudentClassSelectView> {
   @override
   Widget build(BuildContext context) {
+
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return SafeArea(
@@ -35,8 +34,8 @@ class _StudentClassSelectViewState extends State<StudentClassSelectView> {
                 children: [
                   BarDescription(
                     "assets/image/logo2021-2.png",
-                    "اختر الصفوف التي ترغب في دراستها",
-                    "(يمكنك اختيار أكثر من صف )",
+                    KeysConfig.selectStage,
+                    KeysConfig.selectMore
                   ),
                   BlocConsumer<StagesCubit, StagesState>(
                     listener: (context, state) {},

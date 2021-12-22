@@ -1,7 +1,11 @@
 // ignore_for_file: use_key_in_widget_constructors
 
+import 'package:almanhaj/screens/banner_details/cubit/slider_details_cubit.dart';
+import 'package:almanhaj/screens/banner_details/models/model.dart';
 import 'package:almanhaj/screens/banner_details/page/views/ads_spaces.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'page/views/content_subject_header.dart';
 import 'page/views/subject_description_data.dart';
@@ -12,6 +16,10 @@ import '../home_screen/page/views/speed_dial.dart';
 import '../home_screen/view.dart';
 
 class BannerDetailsView extends StatefulWidget {
+  final int? id;
+
+  const BannerDetailsView({Key? key, this.id}) : super(key: key);
+
   @override
   State<BannerDetailsView> createState() => _BannerDetailsViewState();
 }
@@ -41,46 +49,75 @@ class _BannerDetailsViewState extends State<BannerDetailsView> {
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                 physics: const BouncingScrollPhysics(),
                 children: [
-                  Wrap(
-                    //crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: height * 0.4,
-                        width: width * 0.95,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          image: const DecorationImage(
-                              image: NetworkImage(
-                                //   "${snapshot.data['x_featured_media_medium']}"
-                                "https://1.bp.blogspot.com/-DXOpLn5BG5s/YSSenl3UxUI/AAAAAAAAr34/8k6H9JU2JoQwKeXU5BxDfEBXjb2TVe2egCNcBGAsYHQ/s2048/2.jpg",
-                              ),
-                              fit: BoxFit.cover),
+                  BlocProvider(
+                    create: (context) => SliderDetailsCubit(id: widget.id!),
+                    child: BlocConsumer<SliderDetailsCubit, SliderDetailsState>(
+                      listener: (context, state) {},
+                      builder: (context, state) {
+                          if (state is SliderDetailsLoading){
+                            return const Center(child: SpinKitChasingDots(
+                              color: kPrimaryBlueColor,
+                              size: 40,
+                            ));
+
+                          }
+                          if(state is SliderDetailsSuccess){
+                            return Wrap(
+                              //crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // ignore: unnecessary_null_comparison
+                                state.sliderDetails.xFeaturedMediaMedium != null?  Container(
+                                  height: height * 0.4,
+                                  width: width * 0.95,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    image:  DecorationImage(
+                                        image: NetworkImage(
+                                          "${state.sliderDetails.xFeaturedMediaMedium}"
+                                         // "https://1.bp.blogspot.com/-DXOpLn5BG5s/YSSenl3UxUI/AAAAAAAAr34/8k6H9JU2JoQwKeXU5BxDfEBXjb2TVe2egCNcBGAsYHQ/s2048/2.jpg",
+                                        ),
+                                        fit: BoxFit.cover),
+                                  ),
+                                ):const SizedBox(),
+                                const AdsSpaces(),
+                                ContentSubjectHeader(
+                                    title: state.sliderDetails.title.rendered,
+                                    date: state.sliderDetails.xDate,
+                                    authorName: state.sliderDetails.xAuthor
+                                ),
+                                SubjectDescriptionView(
+                                    description:  state.sliderDetails.content.rendered),
+                                const AdsSpaces(),
+                                 SubjectDownloadFile(
+                                  /*title: '${snapshot.data['filetitle']}',
+                     itemsize: '${snapshot.data['filesize']}',
+                     itemtype: '${snapshot.data['filetype']}',
+                     itemUrl: '${snapshot.data['fileurl']}',*/
+                                    fileName: state.sliderDetails.filetitle,
+                                    //"كتاب امتحان الجغرافيا للصف الثالث الثانوي التيرم الاول 2021",
+                                    fileSize:  state.sliderDetails.filesize,
+                                    //"38.81 MB",
+                                    fileType:  state.sliderDetails.filetype,
+                                    //"PDF",
+                                    itemUrl: state.sliderDetails.fileurl
+                                   // ""
                         ),
-                      ),
-                      const AdsSpaces(),
-                      ContentSubjectHeader(),
-                      SubjectDescriptionView(
-                          // '${snapshot.data['content']['rendered']}'
-                          description: test),
-                      const AdsSpaces(),
-                      const SubjectDownloadFile(
-                          /*title: '${snapshot.data['filetitle']}',
-                   itemsize: '${snapshot.data['filesize']}',
-                   itemtype: '${snapshot.data['filetype']}',
-                   itemUrl: '${snapshot.data['fileurl']}',*/
-                          fileName:
-                              "كتاب امتحان الجغرافيا للصف الثالث الثانوي التيرم الاول 2021",
-                          fileSize: "38.81 MB",
-                          fileType: "PDF",
-                          itemUrl: ""),
-                    ],
+                              ],
+                            );
+                          }
+                          if(state is SliderDetailsError){
+                            return Center(child: Text(state.msg!));
+                          }
+                          return const SizedBox();
+                      },
+                    ),
                   ),
                 ]),
           ),
         ));
   }
 
-   adsSpaces(double height, double width) {
+  adsSpaces(double height, double width) {
     return Container(
       // child: AdmobBanner(
       //   adUnitId: getBannerAdUnitId()!,
@@ -102,7 +139,6 @@ class _BannerDetailsViewState extends State<BannerDetailsView> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-
       automaticallyImplyLeading: false,
       backgroundColor: Colors.white,
       elevation: 0.0,
@@ -119,16 +155,16 @@ class _BannerDetailsViewState extends State<BannerDetailsView> {
         ),
       ),
       actions: [
-
         IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.keyboard_arrow_right,
-              color: Colors.black,
-              size: 40,
-            ),),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.keyboard_arrow_right,
+            color: Colors.black,
+            size: 40,
+          ),
+        ),
       ],
     );
   }

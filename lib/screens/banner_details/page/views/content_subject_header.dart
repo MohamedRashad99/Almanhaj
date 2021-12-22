@@ -3,6 +3,15 @@ import 'package:almanhaj/screens/components/constants.dart';
 
 // ignore: use_key_in_widget_constructors
 class ContentSubjectHeader extends StatelessWidget {
+
+
+  final String? title ;
+  final String?  date;
+  final String?  authorName;
+  const ContentSubjectHeader({Key? key, required this.title,required this.date,required this.authorName}) : super(key: key);
+
+
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -17,7 +26,8 @@ class ContentSubjectHeader extends StatelessWidget {
               spaceH(10),
               Text(
                 // "${snapshot.data['title']['rendered']}",
-                "كتاب مادة الجغرافيا للصف الثالث الثانوي التيرم الأول 2021",
+               // "كتاب مادة الجغرافيا للصف الثالث الثانوي التيرم الأول 2021",
+                title!,
                 maxLines: 3,
               //  textAlign: TextAlign.start,
                 //textDirection: TextDirection.rtl,
@@ -26,7 +36,7 @@ class ContentSubjectHeader extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                     color: HexColor("#323232")),
               ),
-              spaceH(15),
+             // spaceH(10),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -34,14 +44,16 @@ class ContentSubjectHeader extends StatelessWidget {
                   spaceW(5),
                   dateAndAuthorText(
                     // "${snapshot.data['x_date']}",
-                      "ديسمبر 2020,19"
+                     // "ديسمبر 2020,19"
+                    date!,
                   ),
                   spaceW(30),
                   buildIcon(Icons.create),
                   spaceW(5),
                   dateAndAuthorText(
                     // "${snapshot.data['x_author']}",
-                    "علي علوكة",
+                    //"علي علوكة",
+                    authorName!,
                   ),
 
                 ],
