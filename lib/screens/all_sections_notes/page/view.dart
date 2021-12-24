@@ -1,5 +1,10 @@
 // ignore_for_file: use_key_in_widget_constructors
 
+import 'dart:developer';
+
+import 'package:almanhaj/local_storage/local_storage.dart';
+import 'package:almanhaj/screens/home_screen/page/views/user_section_selected/cubit_section_name/sections_names_cubit.dart';
+
 import '../cubit/all_sections_notes_cubit.dart';
 import 'views/subject_header.dart';
 import '../../components/constants.dart';
@@ -12,16 +17,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class ListOfNewestAdded extends StatefulWidget {
+class ListOfAllSectionNotes extends StatefulWidget {
   @override
-  State<ListOfNewestAdded> createState() => _ListOfSelectedCourseState();
+  State<ListOfAllSectionNotes> createState() => _ListOfSelectedCourseState();
 }
 
-class _ListOfSelectedCourseState extends State<ListOfNewestAdded> {
+class _ListOfSelectedCourseState extends State<ListOfAllSectionNotes> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
+    final id2 = LocalStorage.getInt("selectedClassesId");
+    log(id2.toString());
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       key: scaffoldKey,
@@ -32,7 +39,10 @@ class _ListOfSelectedCourseState extends State<ListOfNewestAdded> {
       floatingActionButton: FloatingActionView(),
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
       endDrawer: MenueItems(),
-      body: BlocConsumer<AllSectionsNotesCubit, AllSectionsNotesState>(
+
+      body: BlocProvider(
+        create: (context) => AllSectionsNotesCubit(id: id2),
+       child: BlocConsumer<AllSectionsNotesCubit, AllSectionsNotesState>(
         listener: (context, state) {},
         builder: (context, state) {
           if (state is AllSectionsNotesLoading) {
@@ -51,8 +61,8 @@ class _ListOfSelectedCourseState extends State<ListOfNewestAdded> {
               children: [
                 SizedBox(
                   child: const SubjectHeader(
-                    title1: "",
-                    title2: "",
+                    title1: "جميع الملازم والمذكرات المتاحة الان",
+                    title2: "كافة المواد التعلمية",
                   ),
                   height: height * 0.075,
                 ),
@@ -78,6 +88,7 @@ class _ListOfSelectedCourseState extends State<ListOfNewestAdded> {
           return const SizedBox();
         },
       ),
+),
     );
   }
 

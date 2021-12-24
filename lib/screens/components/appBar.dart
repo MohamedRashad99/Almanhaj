@@ -6,7 +6,6 @@ import 'package:almanhaj/screens/home_screen/view.dart';
 import 'package:get/get.dart';
 
 import 'constants.dart';
-import 'fast_widget.dart';
 
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   final String? title;

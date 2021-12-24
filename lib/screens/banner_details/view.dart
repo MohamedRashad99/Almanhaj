@@ -10,7 +10,6 @@ import 'page/views/content_subject_header.dart';
 import 'page/views/subject_description_data.dart';
 import 'page/views/subject_download_file.dart';
 import '../components/constants.dart';
-import '../components/fast_widget.dart';
 import '../home_screen/page/views/speed_dial.dart';
 import '../home_screen/view.dart';
 

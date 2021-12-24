@@ -13,11 +13,11 @@ class SubjectHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+
     return Container(
 
       margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 2.5),
+      padding: EdgeInsets.symmetric(vertical: 3),
       //color: Colors.amber,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -33,16 +33,18 @@ class SubjectHeader extends StatelessWidget {
                   color: HexColor("#323232")),
             ),
           ),
-          Text(
-            parseHtmlString(
-               // " يوجد العديد من المذاكرات المراجعه النهائيه لهذا العام اغتنم الفرصه "
-              title2
+          Padding(
+            padding: const EdgeInsets.only(right: 8),            child: Text(
+              parseHtmlString(
+                 // " يوجد العديد من المذاكرات المراجعه النهائيه لهذا العام اغتنم الفرصه "
+                title2
+              ),
+              maxLines: 3,
+              style: headingStyle.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  color: HexColor("#666666")),
             ),
-            maxLines: 3,
-            style: headingStyle.copyWith(
-                fontWeight: FontWeight.bold,
-                fontSize: 12,
-                color: HexColor("#666666")),
           )
         ],
       ),

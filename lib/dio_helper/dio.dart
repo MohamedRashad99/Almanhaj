@@ -53,27 +53,5 @@ abstract class NetWork {
 
 
 
-  dynamic _handelResponse(Response response) {
-    switch (response.statusCode) {
-      case HttpStatus.ok:
-        var responseJson = json.decode(response.toString());
-        return responseJson;
-      case 400:
-        var jsonResponse = 'unauth';
-        return jsonResponse;
-      case 401:
-        var jsonResponse = 'هذا الايميل مستخدم من قبل';
-        return jsonResponse;
-      case 403:
-        var jsonResponse = 'unauth';
-        return jsonResponse;
-      case HttpStatus.internalServerError:
-        var jsonResponse = 'server error';
-        return jsonResponse;
 
-      default:
-        var jsonResponse = 'server error';
-        return jsonResponse;
-    }
-  }
 }

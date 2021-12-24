@@ -1,13 +1,9 @@
 // ignore_for_file: use_key_in_widget_constructors
 
-import 'package:almanhaj/generated/assets.dart';
 
-import '../../../../components/constants.dart';
-import 'cubit/slider_cubit.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 import '../../../../banner_details/view.dart';
 import '../../../../components/custom_cached_image.dart';
 import '../../../../components/fast_widget.dart';

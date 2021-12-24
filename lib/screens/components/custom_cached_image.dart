@@ -12,7 +12,7 @@ customCachedNetworkImage(
   try {
     // ignore: unnecessary_null_comparison
     if (url == null || url == "") {
-      return Container(
+      return SizedBox(
         child: Image.asset(
             Assets.image.logo2021,
           height: 100,

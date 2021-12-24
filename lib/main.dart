@@ -1,5 +1,6 @@
 import 'package:almanhaj/local_storage/local_storage.dart';
-import 'package:almanhaj/screens/home_screen/page/views/banner_slider/cubit/slider_cubit.dart';
+import 'package:almanhaj/screens/home_screen/page/views/user_section_selected/cubit_show_subjects/show_subjects_cubit.dart';
+import 'screens/home_screen/page/views/banner_slider/cubit/slider_cubit.dart';
 import 'package:almanhaj/screens/student_class_select/cubit/stages_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,9 +23,8 @@ Future<void> main() async {
   }));
 }
 
-class Almanhaj extends StatelessWidget {
+class Almanhaj extends StatelessWidget{
   const Almanhaj({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -32,6 +32,7 @@ class Almanhaj extends StatelessWidget {
         BlocProvider(create: (context) => StagesCubit(),),
         BlocProvider(create: (context) => SliderCubit(),),
 
+      //  BlocProvider(create: (context) => ShowSubjectsCubit(),),
 
       ],
       child: GetMaterialApp(

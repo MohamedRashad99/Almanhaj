@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:almanhaj/screens/components/fast_widget.dart';
-import 'package:almanhaj/screens/home_screen/view.dart';
+
 const kPrimaryColor = Color(0xFF2972B7);
 const Color kAccentColor = Color(0xFFFFD0C5);
 const Color kTextColor = Color(0xFFB5B5B5);

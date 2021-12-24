@@ -1,5 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:developer';
+
 import 'package:almanhaj/local_storage/local_storage.dart';
 import 'package:almanhaj/screens/all_sections_notes/page/view.dart';
 import 'package:almanhaj/screens/home_screen/page/views/user_section_selected/cubit_show_subjects/show_subjects_cubit.dart';
@@ -91,7 +93,7 @@ class _UserSectionSelectedState extends State<UserSectionSelected> {
               InkWell(
                 onTap: () {
                   widget.onTapAllNotes;
-                  navigateTo(context, ListOfNewestAdded());
+                  navigateTo(context, ListOfAllSectionNotes());
                 },
                 child: Row(
                   children: [
