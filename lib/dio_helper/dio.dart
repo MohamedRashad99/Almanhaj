@@ -19,9 +19,9 @@ abstract class NetWork {
         followRedirects: false,
       ),
     );
-    if (kDebugMode) {
-      _dio.interceptors.add(PrettyDioLogger(requestBody: true, requestHeader: true));
-    }
+    // if (kDebugMode) {
+    //   _dio.interceptors.add(PrettyDioLogger(requestBody: true, requestHeader: true));
+    // }
     return _dio;
   }
 

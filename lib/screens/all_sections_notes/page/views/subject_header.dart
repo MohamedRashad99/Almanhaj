@@ -4,6 +4,13 @@ import 'package:flutter/material.dart';
 import '../../../components/constants.dart';
 import '../../../components/fast_widget.dart';
 class SubjectHeader extends StatelessWidget {
+
+  final String title1;
+  final String title2;
+  const SubjectHeader({required this.title1,required this.title2});
+
+
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -18,7 +25,8 @@ class SubjectHeader extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 20),
             child: Text(
-              "أحدث الاضافات",
+             // "أحدث الاضافات",
+              title1,
               style: headingStyle.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 12,
@@ -27,7 +35,9 @@ class SubjectHeader extends StatelessWidget {
           ),
           Text(
             parseHtmlString(
-                " يوجد العديد من المذاكرات المراجعه النهائيه لهذا العام اغتنم الفرصه "),
+               // " يوجد العديد من المذاكرات المراجعه النهائيه لهذا العام اغتنم الفرصه "
+              title2
+            ),
             maxLines: 3,
             style: headingStyle.copyWith(
                 fontWeight: FontWeight.bold,

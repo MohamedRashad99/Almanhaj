@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:almanhaj/local_storage/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:almanhaj/screens/components/constants.dart';
@@ -14,6 +16,7 @@ class ClassItemPressed extends StatefulWidget {
 }
 
 class _ClassItemPressedState extends State<ClassItemPressed> {
+  final List<String> selected =[];
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -22,7 +25,11 @@ class _ClassItemPressedState extends State<ClassItemPressed> {
       onTap: (){
         setState(() {
           widget.isPrssed=!widget.isPrssed;
-          LocalStorage.setString('selectedClassesId', '${widget.id}');
+          selected.add(widget.name);
+          log(selected.toString());
+          log(selected.length.toString());
+          LocalStorage.setString('selectedClassesName', widget.name );
+          LocalStorage.setInt('selectedClassesId', widget.id );
 
         });
       },

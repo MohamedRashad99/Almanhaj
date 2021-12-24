@@ -1,16 +1,24 @@
 // ignore_for_file: use_key_in_widget_constructors
 
+import 'dart:developer';
+
+import 'package:almanhaj/generated/assets.dart';
+import 'package:almanhaj/local_storage/local_storage.dart';
 import 'package:almanhaj/screens/banner_details/page/views/ads_spaces.dart';
-import 'package:almanhaj/screens/list_of_selected_course/view.dart';
+import 'package:almanhaj/screens/home_screen/page/views/banner_slider/cubit/slider_cubit.dart';
+import 'package:almanhaj/screens/home_screen/page/views/user_section_selected/cubit_section_name/sections_names_cubit.dart';
+import 'package:almanhaj/screens/list_of_newest_added/view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'page/views/banner_slider/banner_slider.dart';
 import '../components/appBar.dart';
 import '../components/constants.dart';
 import 'page/views/menue_items.dart';
-import 'page/views/section_title.dart';
+import 'page/views/sections_titles/section_title.dart';
 import 'page/views/speed_dial.dart';
-import 'page/views/user_section_selected.dart';
+import 'page/views/user_section_selected/user_section_selected.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -43,11 +51,12 @@ class _HomeViewState extends State<HomeView> {
           Column(
             children: [
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 height: height * 0.42,
                 width: width,
                 decoration: BoxDecoration(
-                   // color: Colors.lightBlue,
+                    // color: Colors.lightBlue,
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
                     boxShadow: [
@@ -57,21 +66,39 @@ class _HomeViewState extends State<HomeView> {
                           blurRadius: 3,
                           spreadRadius: 3)
                     ]),
-                child: Column(
-                  children: [
-                    SectionTitles(
-                        title1: "أحداث الاضافات",
-                        title2: " كل الملازم و المذكرات",
-                        onTapDescription2: () {
-                          //interstitialAd.show();
-                          Get.to(()=>ListOfSelectedCourse());
-                        }),
-                    BannerSlider(),
-                  ],
+                child: BlocConsumer<SliderCubit, SliderState>(
+                  listener: (context, state) {},
+                  builder: (context, state) {
+                    if (state is SliderLoading) {
+                      return const Center(
+                          child: SpinKitChasingDots(
+                        color: kPrimaryBlueColor,
+                        size: 40,
+                      ));
+                    }
+                    if (state is SliderSuccess) {
+                      return Column(
+                        children: [
+                          SectionTitles(
+                              title1: "أحداث الاضافات",
+                              title2: " كل الملازم و المذكرات",
+                              onTapDescription2: () {
+                                //interstitialAd.show();
+                                Get.to(() =>
+                                    ListOfNewestAdded(sliders: state.sliders));
+                              }),
+                          BannerSlider(sliders: state.sliders),
+                        ],
+                      );
+                    }
+                    if (state is SliderError) {
+                      return Center(child: Image.asset(Assets.image.logo2021));
+                    }
+                    return const SizedBox();
+                  },
                 ),
               ),
               const AdsSpaces(),
-
               ListView.builder(
                 itemCount: 3,
                 shrinkWrap: true,
@@ -79,24 +106,64 @@ class _HomeViewState extends State<HomeView> {
                 physics: const BouncingScrollPhysics(),
                 scrollDirection: Axis.vertical,
                 itemBuilder: (context, int index) {
-                  return Container(
-                    margin: const EdgeInsets.symmetric(vertical: 5),
-                    child: UserSectionSelected(
-                      title1: "الصف الثالث الثانوي",
-                      title2: "كل الملازم والمذكرات",
-                      onTapDescription1: () {
-                        //interstitialAd.show();
+                  final name = LocalStorage.getString("selectedClassesName");
+                  final id2 = LocalStorage.getInt("selectedClassesId");
+                  log(id2.toString());
+
+                  return BlocProvider(
+                    create: (context) => SectionsNamesCubit(id: id2),
+                    child: BlocConsumer<SectionsNamesCubit, SectionsNamesState>(
+                      listener: (context, state) {},
+                      builder: (context, state) {
+                        if (state is SectionsNamesLoading) {
+                          return const Center(
+                              child: SpinKitChasingDots(
+                            color: kPrimaryBlueColor,
+                            size: 10,
+                          ));
+                        }
+                        if (state is SectionsNamesEmpty){
+                          return Container(
+                            margin: const EdgeInsets.symmetric(vertical: 5),
+                            child: UserSectionSelected(
+                              className: name,
+                              allNotes: "كل الملازم والمذكرات",
+                              onTapAllNotes: () {},
+                              section1: 'الفصل الدراسي الاول',
+                              section2:' الفصل الدراسي الثاني',
+                              onTapSection1: () {},
+                              onTapSection2: () {},
+                            ),
+                          );
+                        }
+                        if (state is SectionsNamesSuccess) {
+                          LocalStorage.setInt('KeySection1', state.sectionsNames[0].id);
+                          LocalStorage.setInt('KeySection2', state.sectionsNames[1].id);
+                          return Container(
+                            margin: const EdgeInsets.symmetric(vertical: 5),
+                            child: UserSectionSelected(
+                              className: name,
+                              allNotes: "كل الملازم والمذكرات",
+                              onTapAllNotes: () {},
+                              section1: state.sectionsNames[0].name,
+                              section2:state.sectionsNames[1].name,
+                              onTapSection1: () {},
+                              onTapSection2: () {},
+                            ),
+                          );
+                        }
+                        if (state is SectionsNamesError) {
+                          return Center(child: Text(state.msg));
+                        }
+                        return const SizedBox();
                       },
-                      onTapDescription2: () {},
-                      section1: "الفصل الدراسي الاول",
-                      section2: "الفصل الدراسي الثاني",
-                      onTapSection1: () {},
-                      onTapSection2: () {},
                     ),
                   );
                 },
               ),
-              SizedBox(height: height*0.1,),
+              SizedBox(
+                height: height * 0.1,
+              ),
             ],
           )
         ],

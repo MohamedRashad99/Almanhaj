@@ -1,8 +1,13 @@
 // ignore_for_file: use_key_in_widget_constructors
 
+import 'package:almanhaj/generated/assets.dart';
+import 'package:almanhaj/screens/home_screen/page/views/banner_slider/cubit/slider_cubit.dart';
+import 'package:almanhaj/screens/home_screen/page/views/banner_slider/model/model.dart';
 import 'package:almanhaj/screens/list_of_selected_course/page/views/lesson_of_card.dart';
 import 'package:flutter/material.dart';
 import 'package:almanhaj/screens/banner_details/view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'page/views/subject_header.dart';
 import '../components/constants.dart';
 import '../components/fast_widget.dart';
@@ -10,12 +15,16 @@ import '../home_screen/page/views/menue_items.dart';
 import '../home_screen/page/views/speed_dial.dart';
 import '../home_screen/view.dart';
 
-class ListOfSelectedCourse extends StatefulWidget {
+class ListOfNewestAdded extends StatefulWidget {
+  final List<Sliders> sliders;
+
+  const ListOfNewestAdded({required this.sliders});
+
   @override
-  State<ListOfSelectedCourse> createState() => _ListOfSelectedCourseState();
+  State<ListOfNewestAdded> createState() => _ListOfSelectedCourseState();
 }
 
-class _ListOfSelectedCourseState extends State<ListOfSelectedCourse> {
+class _ListOfSelectedCourseState extends State<ListOfNewestAdded> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -40,17 +49,19 @@ class _ListOfSelectedCourseState extends State<ListOfSelectedCourse> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: 8,
+              itemCount: widget.sliders.length,
               //shrinkWrap: true,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, int index) {
-                return const  CardLesson(
-                    "مذكرة تأسيس لغه عربية أولي ثانوي 2021",
-                    "تم تصوير كل خطوه وكل جزء من التسطيب بحيث توصل المعلومه كامله للما الصورة اللي في البوست دا كل تعريفات الجهاز اتعملمت من الوندوز دون الاحتياج",
-                    "assets/image/logo2021.png");
+                return CardLesson(
+                  id: widget.sliders[index].id,
+                  title1: widget.sliders[index].title.rendered,
+                  title2: widget.sliders[index].content.rendered,
+                  image: widget.sliders[index].xFeaturedMediaMedium,
+                );
               },
             ),
-          )
+          ),
         ],
       ),
     );

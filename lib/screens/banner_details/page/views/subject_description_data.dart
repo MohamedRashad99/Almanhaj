@@ -15,8 +15,6 @@ class SubjectDescriptionView extends StatefulWidget {
 class _SubjectDescriptionViewState extends State<SubjectDescriptionView> {
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     return Container(
      // height: height*0.4,
 

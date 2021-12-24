@@ -1,3 +1,4 @@
+import 'package:almanhaj/generated/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -13,7 +14,7 @@ customCachedNetworkImage(
     if (url == null || url == "") {
       return Container(
         child: Image.asset(
-          "assets/image/logo2021.png",
+            Assets.image.logo2021,
           height: 100,
           width: MediaQuery.of(context).size.width,
           fit: BoxFit.contain,
@@ -34,7 +35,7 @@ customCachedNetworkImage(
                 textDirection: TextDirection.rtl,
                 children: [
                   Image.asset(
-                    "assets/image/logo2021.png",
+                    Assets.image.logo2021,
                     height: 100,
                     width: MediaQuery.of(context).size.width,
                     fit: BoxFit.contain,
@@ -55,7 +56,7 @@ customCachedNetworkImage(
           textDirection: TextDirection.rtl,
           children: [
             Image.asset(
-              "assets/image/logo2021.png",
+              Assets.image.logo2021,
               height: 100,
               width: MediaQuery.of(context).size.width,
               fit: BoxFit.contain,
@@ -87,9 +88,9 @@ customCachedNetworkImageWitoutTitle({
   try {
     // ignore: unnecessary_null_comparison
     if (url == null || url == "") {
-      return Container(
+      return SizedBox(
         child: Image.asset(
-          "assets/images/logo2021.png",
+          Assets.image.logo2021,
           height: 100,
           width: MediaQuery.of(context).size.width,
           fit: BoxFit.contain,
@@ -104,17 +105,17 @@ customCachedNetworkImageWitoutTitle({
             imageUrl: url,
             fit: fit,
             placeholder: (context, url) =>
-                Center(child: CircularProgressIndicator()),
+              const   Center(child: SpinKitChasingDots(color: kPrimaryBlueColor,size: 15,)),
             errorWidget: (context, url, error) {
               return Image.asset(
-                "assets/images/logo2021.png",
+                  Assets.image.logo2021,
                 height: 100,
                 width: MediaQuery.of(context).size.width,
                 fit: BoxFit.contain,
               );
             })
             : Image.asset(
-          "assets/images/logo2021.png",
+            Assets.image.logo2021,
           height: 100,
           width: MediaQuery.of(context).size.width,
           fit: BoxFit.contain,

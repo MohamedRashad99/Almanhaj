@@ -44,10 +44,11 @@ class _ListOfSelectedCourseState extends State<ListOfSelectedCourse> {
               //shrinkWrap: true,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, int index) {
-                return const  CardLesson(
-                    "مذكرة تأسيس لغه عربية أولي ثانوي 2021",
-                    "تم تصوير كل خطوه وكل جزء من التسطيب بحيث توصل المعلومه كامله للما الصورة اللي في البوست دا كل تعريفات الجهاز اتعملمت من الوندوز دون الاحتياج",
-                    "assets/image/logo2021.png");
+                return   CardLesson(
+                  id: 3,
+                   title1:  "مذكرة تأسيس لغه عربية أولي ثانوي 2021",
+                    title2: "تم تصوير كل خطوه وكل جزء من التسطيب بحيث توصل المعلومه كامله للما الصورة اللي في البوست دا كل تعريفات الجهاز اتعملمت من الوندوز دون الاحتياج",
+                   image:  "assets/image/logo2021.png");
               },
             ),
           )

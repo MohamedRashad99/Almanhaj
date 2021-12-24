@@ -1,7 +1,6 @@
 // ignore_for_file: use_key_in_widget_constructors
 
 import 'package:almanhaj/screens/banner_details/cubit/slider_details_cubit.dart';
-import 'package:almanhaj/screens/banner_details/models/model.dart';
 import 'package:almanhaj/screens/banner_details/page/views/ads_spaces.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -73,8 +72,7 @@ class _BannerDetailsViewState extends State<BannerDetailsView> {
                                     borderRadius: BorderRadius.circular(15),
                                     image:  DecorationImage(
                                         image: NetworkImage(
-                                          "${state.sliderDetails.xFeaturedMediaMedium}"
-                                         // "https://1.bp.blogspot.com/-DXOpLn5BG5s/YSSenl3UxUI/AAAAAAAAr34/8k6H9JU2JoQwKeXU5BxDfEBXjb2TVe2egCNcBGAsYHQ/s2048/2.jpg",
+                                          state.sliderDetails.xFeaturedMediaMedium
                                         ),
                                         fit: BoxFit.cover),
                                   ),

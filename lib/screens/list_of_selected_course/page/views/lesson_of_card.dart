@@ -1,14 +1,15 @@
 import 'package:almanhaj/screens/banner_details/view.dart';
 import 'package:almanhaj/screens/components/constants.dart';
+import 'package:almanhaj/screens/components/custom_cached_image.dart';
 import 'package:almanhaj/screens/components/fast_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 class CardLesson extends StatelessWidget {
-
-  final String? title1;
-  final String? title2;
-  final String? image;
-  const CardLesson(this.title1, this.title2, this.image, {Key? key}) : super(key: key);
+  final int id;
+  final String title1;
+  final String title2;
+  final String image;
+   const CardLesson({required this.id, required this.title1,required this.title2, required this.image, Key? key,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class CardLesson extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     return InkWell(
           onTap: () {
-           Get.to(()=>BannerDetailsView());
+           Get.to(()=> BannerDetailsView(id: id,));
           },
           child: Container(
             margin: const EdgeInsets.symmetric(
@@ -48,9 +49,9 @@ class CardLesson extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: Text(
-                          title1!,
-                          maxLines: 3,
-                          // textAlign: TextAlign.start,
+                          title1,
+                          maxLines: 2,
+                          textAlign: TextAlign.start,
                           textDirection: TextDirection.rtl,
                           style: headingStyle.copyWith(
                               fontSize: 14,
@@ -71,7 +72,7 @@ class CardLesson extends StatelessWidget {
                         padding: const EdgeInsets.all(4.0),
                         child: Text(
                           parseHtmlString(
-                              title2 !,
+                              title2 ,
                           ),
                           maxLines: 3,
                           textAlign: TextAlign.start,
@@ -94,15 +95,11 @@ class CardLesson extends StatelessWidget {
                         topRight: Radius.circular(15),
                         bottomRight: Radius.circular(15)),
                   ),
-                  child: Image.asset(
-                    image!,
-                    fit: BoxFit.contain,
-                  ),
-                  //customCachedNetworkImageWitoutTitle(
-                  //     url: "",
-                  //     context: context,
-                  //     fit: BoxFit.contain)
-                ),
+                  child:customCachedNetworkImageWitoutTitle(
+                      url: image,
+                      context: context,
+                       fit: BoxFit.contain)
+   ),
               ],
             ),
           ),

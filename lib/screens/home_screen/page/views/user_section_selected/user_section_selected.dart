@@ -1,16 +1,20 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:almanhaj/local_storage/local_storage.dart';
+import 'package:almanhaj/screens/all_sections_notes/page/view.dart';
+import 'package:almanhaj/screens/home_screen/page/views/user_section_selected/cubit_show_subjects/show_subjects_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:almanhaj/screens/components/constants.dart';
 import 'package:almanhaj/screens/components/fast_widget.dart';
 import 'package:almanhaj/screens/list_of_selected_course/view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 // ignore: must_be_immutable
 class UserSectionSelected extends StatefulWidget {
-  final String? title1;
-  final String? title2;
-  final VoidCallback? onTapDescription1;
-  final VoidCallback? onTapDescription2;
+  final String? className;
+  final String? allNotes;
+  final VoidCallback? onTapAllNotes;
   final String? section1;
   final String? section2;
   final VoidCallback? onTapSection1;
@@ -23,10 +27,9 @@ class UserSectionSelected extends StatefulWidget {
   UserSectionSelected({
     this.isPrssed1 = false,
     this.isPrssed2 = false,
-    required this.title1,
-    required this.title2,
-    required this.onTapDescription1,
-    required this.onTapDescription2,
+    required this.className,
+    required this.allNotes,
+    required this.onTapAllNotes,
     required this.section1,
     required this.section2,
     required this.onTapSection1,
@@ -39,9 +42,11 @@ class UserSectionSelected extends StatefulWidget {
 
 class _UserSectionSelectedState extends State<UserSectionSelected> {
   int? value;
+  int sectionId=0;
 
   @override
   Widget build(BuildContext context) {
+
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Directionality(
@@ -63,33 +68,30 @@ class _UserSectionSelectedState extends State<UserSectionSelected> {
           ),
           Row(
             children: [
-              InkWell(
-                onTap: widget.onTapDescription1,
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.more_vert,
-                      color: Colors.black,
-                      size: 30,
-                    ),
-                    spaceW(5),
-                    Text(
-                      widget.title1!,
-                      style: headingStyle.copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                          color: Colors.black),
-                    ),
-                  ],
-                ),
+              Row(
+                children: [
+                  const Icon(
+                    Icons.more_vert,
+                    color: Colors.black,
+                    size: 30,
+                  ),
+                  spaceW(5),
+                  Text(
+                    widget.className!,
+                    style: headingStyle.copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                        color: Colors.black),
+                  ),
+                ],
               ),
               SizedBox(
                 width: width * 0.08,
               ),
               InkWell(
                 onTap: () {
-                  widget.onTapDescription2;
-                  navigateTo(context, ListOfSelectedCourse());
+                  widget.onTapAllNotes;
+                  navigateTo(context, ListOfNewestAdded());
                 },
                 child: Row(
                   children: [
@@ -100,7 +102,7 @@ class _UserSectionSelectedState extends State<UserSectionSelected> {
                     ),
                     spaceW(5),
                     Text(
-                      widget.title2!,
+                      widget.allNotes!,
                       style: headingStyle.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
@@ -123,6 +125,7 @@ class _UserSectionSelectedState extends State<UserSectionSelected> {
                   widget.onTapSection1;
                   setState(() {
                     widget.isPrssed1 = true;
+                    sectionId = LocalStorage.getInt('KeySection1');
                     widget.isPrssed2 = false;
                     value = 1;
                   });
@@ -149,6 +152,7 @@ class _UserSectionSelectedState extends State<UserSectionSelected> {
                 onTap: () {
                   widget.onTapSection2;
                   setState(() {
+                    sectionId =  LocalStorage.getInt('KeySection2');
                     widget.isPrssed2 = true;
                     widget.isPrssed1 = false;
                     value = 2;
@@ -168,39 +172,62 @@ class _UserSectionSelectedState extends State<UserSectionSelected> {
           SizedBox(
             height: height * 0.020,
           ),
-          Container(
-            width: width,
-            height: height * 0.03,
-            child: ListView.builder(
-              primary: true,
-              shrinkWrap: true,
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemCount: 7,
-              itemBuilder: (context, int index) {
-                return InkWell(
-                  onTap: () {
-                    navigateTo(context, ListOfSelectedCourse());
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 3),
+          BlocProvider(
+            create: (context) => ShowSubjectsCubit(id: sectionId),
+            child: BlocConsumer<ShowSubjectsCubit, ShowSubjectsState>(
+              listener: (context, state) {},
+              builder: (context, state) {
+
+                if (state is ShowSubjectsLoading) {
+                  return const Center(
+                      child: SpinKitChasingDots(
+                        color: kPrimaryBlueColor,
+                        size: 10,
+                      ));
+                }
+                if (state is ShowSubjectsSuccess){
+                  return SizedBox(
+                    width: width,
                     height: height * 0.03,
-                    width: width * 0.15,
-                    decoration: BoxDecoration(
-                      color: kPrimaryBlueColor.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(8),
+                    child: ListView.builder(
+                      primary: true,
+                      shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: state.showSubjects.length,
+                      itemBuilder: (context, int index) {
+                        return InkWell(
+                          onTap: () {
+                            navigateTo(context, ListOfSelectedCourse());
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 3),
+                            height: height * 0.03,
+                            width: width * 0.15,
+                            decoration: BoxDecoration(
+                              color: kPrimaryBlueColor.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Center(
+                              child: Text(
+                                state.showSubjects[index].name!,
+                                style: headingStyle.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 8,
+                                    color: Colors.black),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     ),
-                    child: Center(
-                      child: Text(
-                        "اللغه العربية",
-                        style: headingStyle.copyWith(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 8,
-                            color: Colors.black),
-                      ),
-                    ),
-                  ),
-                );
+                  );
+                }
+                if (state is ShowSubjectsError) {
+                  return Center(child: Text(state.msg));
+                }
+                return const SizedBox();
+
               },
             ),
           ),

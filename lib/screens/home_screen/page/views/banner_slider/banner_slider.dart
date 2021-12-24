@@ -11,75 +11,60 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../../../banner_details/view.dart';
 import '../../../../components/custom_cached_image.dart';
 import '../../../../components/fast_widget.dart';
+import 'model/model.dart';
 
 class BannerSlider extends StatelessWidget {
+  final List<Sliders> sliders;
+
+  const BannerSlider({Key? key,required this.sliders}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return BlocConsumer<SliderCubit, SliderState>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        if (state is  SliderLoading){
-          return const Center(
-              child: SpinKitChasingDots(
-                color: kPrimaryBlueColor,
-                size: 40,
-              ));
-        }
-        if (state is SliderSuccess){
-          return Container(
-            margin: const EdgeInsets.symmetric(vertical: 15),
-            // color: Colors.red,
-            color: Colors.white,
+    return  Container(
+      margin: const EdgeInsets.symmetric(vertical: 15),
+      // color: Colors.red,
+      color: Colors.white,
 
-            height: height*0.3,
-            width: width*0.8,
-            child: CarouselSlider.builder(
-              itemCount: state.sliders.length,
-              itemBuilder: (context, index, pageViewIndex) {
-                return InkWell(
-                  onTap: () {
-                    //  interstitialAd.show();
-                    // TODO :: Im passed id of slider selected here to get more details
-                    navigateTo(context, BannerDetailsView(id: state.sliders[index].id,));
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.only(left: 10, right: 10),
-                    child: customCachedNetworkImage(
-                        context: context,
-                        title:
-                        "${state.sliders[index].title?.rendered}",
-                        url:
-                        "${state.sliders[index].xFeaturedMediaMedium}",
-                        fit: BoxFit.cover),
-                    //   "${snapshot.data[index]['title']['rendered']}",
-                  ),
-                );
-              },
-              options: CarouselOptions(
-                height: 250,
-                aspectRatio: 16 / 9,
-                viewportFraction: 0.9,
-                initialPage: 0,
-                enableInfiniteScroll: true,
-                // reverse: true,
-                autoPlay: true,
-                autoPlayInterval: const Duration(seconds: 3),
-                autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                autoPlayCurve: Curves.fastOutSlowIn,
-                enlargeCenterPage: true,
-                scrollDirection: Axis.horizontal,
-              ),
+      height: height*0.3,
+      width: width*0.8,
+      child: CarouselSlider.builder(
+        itemCount: sliders.length,
+        itemBuilder: (context, index, pageViewIndex) {
+          return InkWell(
+            onTap: () {
+              //  interstitialAd.show();
+              // TODO :: Im passed id of slider selected here to get more details
+              navigateTo(context, BannerDetailsView(id: sliders[index].id,));
+            },
+            child: Container(
+              margin: const EdgeInsets.only(left: 10, right: 10),
+              child: customCachedNetworkImage(
+                  context: context,
+                  title:
+                  sliders[index].title.rendered,
+                  url:
+                  sliders[index].xFeaturedMediaMedium,
+                  fit: BoxFit.cover),
+              //   "${snapshot.data[index]['title']['rendered']}",
             ),
           );
-        }
-        if (state is SliderError){
-          return Center(child: Image.asset(Assets.image.logo2021));
-        }
-        return const SizedBox();
-
-      },
+        },
+        options: CarouselOptions(
+          height: 250,
+          aspectRatio: 16 / 9,
+          viewportFraction: 0.9,
+          initialPage: 0,
+          enableInfiniteScroll: true,
+          // reverse: true,
+          autoPlay: true,
+          autoPlayInterval: const Duration(seconds: 3),
+          autoPlayAnimationDuration: const Duration(milliseconds: 800),
+          autoPlayCurve: Curves.fastOutSlowIn,
+          enlargeCenterPage: true,
+          scrollDirection: Axis.horizontal,
+        ),
+      ),
     );
   }
 }
