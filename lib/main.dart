@@ -34,7 +34,6 @@ class Almanhaj extends StatelessWidget{
         BlocProvider(create: (context) => StagesCubit(),),
         BlocProvider(create: (context) => SliderCubit(),),
 
-      //  BlocProvider(create: (context) => ShowSubjectsCubit(),),
 
       ],
       child: GetMaterialApp(

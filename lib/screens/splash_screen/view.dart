@@ -21,34 +21,36 @@ class SplashScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: kHomeColor,
-      body: SizedBox(
-        height: height,
-        width: width,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-                child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Image.asset(Assets.image.splashalaa),
-              //SvgPicture.asset("assets/image/spalsh_new.svg")
-            )),
-            const Center(
-                child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                "أكبر موقع إلكتروني يحتوي علي المذكرات و الملازم التي تساعد الطالب وأولياء الأمور ",
-                maxLines: 2,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 16,
-                    fontFamily: 'Khebrat Musamim',
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              ),
-            )),
-          ],
+      body: SingleChildScrollView(
+        child: SizedBox(
+          height: height,
+          width: width,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                  child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Image.asset(Assets.image.splashalaa),
+                //SvgPicture.asset("assets/image/spalsh_new.svg")
+              )),
+              const Center(
+                  child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  "أكبر موقع إلكتروني يحتوي علي المذكرات و الملازم التي تساعد الطالب وأولياء الأمور ",
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'Khebrat Musamim',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                ),
+              )),
+            ],
+          ),
         ),
       ),
     );
