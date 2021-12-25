@@ -1,13 +1,8 @@
 // ignore_for_file: use_key_in_widget_constructors
 
-import 'package:almanhaj/generated/assets.dart';
-import 'package:almanhaj/screens/home_screen/page/views/banner_slider/cubit/slider_cubit.dart';
 import 'package:almanhaj/screens/home_screen/page/views/banner_slider/model/model.dart';
 import 'package:almanhaj/screens/list_of_selected_course/page/views/lesson_of_card.dart';
 import 'package:flutter/material.dart';
-import 'package:almanhaj/screens/banner_details/view.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'page/views/subject_header.dart';
 import '../components/constants.dart';
 import '../components/fast_widget.dart';
@@ -30,7 +25,6 @@ class _ListOfSelectedCourseState extends State<ListOfNewestAdded> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: kBackgroundColor,

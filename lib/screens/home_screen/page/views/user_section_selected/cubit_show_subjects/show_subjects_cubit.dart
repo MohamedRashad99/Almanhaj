@@ -1,8 +1,7 @@
 import 'dart:developer';
 
 import 'package:almanhaj/dio_helper/dio.dart';
-import 'package:almanhaj/screens/home_screen/page/views/user_section_selected/models/show_subjects_model.dart';
-import 'package:bloc/bloc.dart';
+import '../models/show_subjects_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_connect/http/src/status/http_status.dart';
 import 'package:meta/meta.dart';

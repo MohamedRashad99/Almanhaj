@@ -6,8 +6,7 @@ import '../../../components/fast_widget.dart';
 class SubjectHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+
     return Container(
 
       margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 2.5),

@@ -3,7 +3,6 @@
 import 'dart:developer';
 
 import 'package:almanhaj/local_storage/local_storage.dart';
-import 'package:almanhaj/screens/home_screen/page/views/user_section_selected/cubit_section_name/sections_names_cubit.dart';
 
 import '../cubit/all_sections_notes_cubit.dart';
 import 'views/subject_header.dart';

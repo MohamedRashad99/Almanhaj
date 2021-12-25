@@ -73,7 +73,7 @@ customCachedNetworkImage(
       );
     }
   } catch (e) {
-    print(e.toString());
+    debugPrint(e.toString());
   }
 }
 
@@ -123,6 +123,6 @@ customCachedNetworkImageWitoutTitle({
       );
     }
   } catch (e) {
-    print(e.toString());
+    debugPrint(e.toString());
   }
 }

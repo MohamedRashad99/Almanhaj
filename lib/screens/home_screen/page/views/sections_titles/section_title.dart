@@ -1,10 +1,8 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:almanhaj/screens/components/fast_widget.dart';
-import 'package:almanhaj/screens/list_of_selected_course/view.dart';
+
 import 'package:flutter/material.dart';
 import 'package:almanhaj/screens/components/constants.dart';
-import 'package:get/get.dart';
 
 class SectionTitles extends StatelessWidget {
   final String? title1;

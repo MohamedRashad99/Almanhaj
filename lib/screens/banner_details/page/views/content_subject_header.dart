@@ -57,7 +57,7 @@ class ContentSubjectHeader extends StatelessWidget {
 
                 ],
               ),
-              spaceH(20),
+              spaceH(15),
             ],
           ),
         ));

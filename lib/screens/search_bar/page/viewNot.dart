@@ -1,7 +1,6 @@
-// ignore: file_names
-// ignore_for_file: use_key_in_widget_constructors
 
-import 'package:queen_themes/queen_themes.dart';
+
+
 
 import '../../components/constants.dart';
 import '../../list_of_selected_course/page/views/lesson_of_card.dart';

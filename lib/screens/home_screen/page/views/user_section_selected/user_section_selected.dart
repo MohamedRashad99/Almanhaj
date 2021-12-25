@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:almanhaj/local_storage/local_storage.dart';
 import 'package:almanhaj/screens/all_sections_notes/page/view.dart';
 import 'package:almanhaj/screens/home_screen/page/views/user_section_selected/cubit_show_subjects/show_subjects_cubit.dart';
+import 'package:almanhaj/screens/list_of_subject_course/page/view.dart';
 import 'package:flutter/material.dart';
 import 'package:almanhaj/screens/components/constants.dart';
 import 'package:almanhaj/screens/components/fast_widget.dart';
@@ -73,8 +74,7 @@ class _UserSectionSelectedState extends State<UserSectionSelected> {
             //color: Colors.amber,
             borderRadius: BorderRadius.circular(15),
           ),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             SizedBox(
               height: height * 0.02,
             ),
@@ -90,10 +90,7 @@ class _UserSectionSelectedState extends State<UserSectionSelected> {
                     spaceW(5),
                     Text(
                       widget.className!,
-                      style: headingStyle.copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                          color: Colors.black),
+                      style: headingStyle.copyWith(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.black),
                     ),
                   ],
                 ),
@@ -148,31 +145,20 @@ class _UserSectionSelectedState extends State<UserSectionSelected> {
                           },
                           child: Text(
                             widget.section1!,
-                            style: headingStyle.copyWith(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
-                                color: value == 1
-                                    ? kPrimaryBlueColor
-                                    : Colors.black),
+                            style: headingStyle.copyWith(fontWeight: FontWeight.bold, fontSize: 14, color: value == 1 ? kPrimaryBlueColor : Colors.black),
                           ),
                         ),
                         Container(
                           color: Colors.white,
                           width: width * 0.1,
-                          child: Center(
-                              child: Text("|",
-                                  style: headingStyle.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                      color: Colors.black))),
+                          child: Center(child: Text("|", style: headingStyle.copyWith(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.black))),
                         ),
                         InkWell(
                           onTap: () {
                             widget.onTapSection2;
                             setState(() {
                               widget.isPrssed2 = true;
-                              ShowSubjectsCubit.of(context)
-                                  .getShowSubjects(id: sectionId2);
+                              ShowSubjectsCubit.of(context).getShowSubjects(id: sectionId2);
                               widget.isPrssed1 = false;
                               value = 2;
                             });
@@ -182,8 +168,7 @@ class _UserSectionSelectedState extends State<UserSectionSelected> {
                             style: headingStyle.copyWith(
                               fontWeight: FontWeight.bold,
                               fontSize: 14,
-                              color:
-                                  value == 2 ? kPrimaryBlueColor : Colors.black,
+                              color: value == 2 ? kPrimaryBlueColor : Colors.black,
                             ),
                           ),
                         ),
@@ -192,7 +177,6 @@ class _UserSectionSelectedState extends State<UserSectionSelected> {
                     SizedBox(
                       height: height * 0.020,
                     ),
-
                     if (state is ShowSubjectsLoading && !widget.isEmpty)
                       const Center(
                           child: SpinKitChasingDots(
@@ -212,11 +196,14 @@ class _UserSectionSelectedState extends State<UserSectionSelected> {
                           itemBuilder: (context, int index) {
                             return InkWell(
                               onTap: () {
-                                navigateTo(context, ListOfSelectedCourse());
+                                navigateTo(
+                                    context,
+                                    ListOfCourseSelected(
+                                      id: id,
+                                    ));
                               },
                               child: Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 3),
+                                margin: const EdgeInsets.symmetric(horizontal: 3),
                                 height: height * 0.03,
                                 width: width * 0.15,
                                 decoration: BoxDecoration(
@@ -226,10 +213,7 @@ class _UserSectionSelectedState extends State<UserSectionSelected> {
                                 child: Center(
                                   child: Text(
                                     state.showSubjects[index].name!,
-                                    style: headingStyle.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 8,
-                                        color: Colors.black),
+                                    style: headingStyle.copyWith(fontWeight: FontWeight.bold, fontSize: 8, color: Colors.black),
                                   ),
                                 ),
                               ),
@@ -237,10 +221,12 @@ class _UserSectionSelectedState extends State<UserSectionSelected> {
                           },
                         ),
                       ),
-                    if (state is ShowSubjectsError && !widget.isEmpty)
-                      Center(child: Text(state.msg)),
-                    if(widget.isEmpty)
-                     const Text("غير متوفر الاّن " ,style: TextStyle(color: Colors.black),),
+                    if (state is ShowSubjectsError && !widget.isEmpty) Center(child: Text(state.msg)),
+                    if (widget.isEmpty)
+                      const Text(
+                        "غير متوفر الاّن ",
+                        style: TextStyle(fontSize: 12, color: Colors.black, fontFamily: "Khebrat Musamim",fontWeight: FontWeight.w400),
+                      ),
                   ],
                 );
               },

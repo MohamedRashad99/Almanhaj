@@ -4,7 +4,7 @@ import 'package:almanhaj/dio_helper/dio.dart';
 import 'package:get/get_connect/http/src/status/http_status.dart';
 
 import '../models/sections_names_model.dart';
-import 'package:bloc/bloc.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 

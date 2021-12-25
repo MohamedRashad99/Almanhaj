@@ -17,7 +17,6 @@ class SubjectHeader extends StatelessWidget {
     return Container(
 
       margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 2.5),
-      padding: EdgeInsets.symmetric(vertical: 3),
       //color: Colors.amber,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,

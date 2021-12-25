@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 
 const kPrimaryColor = Color(0xFF2972B7);
 const Color kAccentColor = Color(0xFFFFD0C5);

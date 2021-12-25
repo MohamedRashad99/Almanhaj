@@ -1,6 +1,5 @@
 import 'package:almanhaj/screens/banner_details/view.dart';
 import 'package:almanhaj/screens/components/constants.dart';
-import 'package:almanhaj/screens/components/fast_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 class SearchCard extends StatelessWidget {

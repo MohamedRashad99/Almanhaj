@@ -3,7 +3,6 @@ import 'dart:io';
 
 import '../../../dio_helper/dio.dart';
 import '../models/model.dart';
-import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 

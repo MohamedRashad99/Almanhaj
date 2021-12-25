@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:almanhaj/local_storage/local_storage.dart';
 import 'package:almanhaj/screens/student_class_select/page/card_selection/model/model.dart';

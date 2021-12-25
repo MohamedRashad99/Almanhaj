@@ -1,8 +1,7 @@
 // ignore_for_file: file_names, use_key_in_widget_constructors, deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
+
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'constants.dart';
@@ -16,7 +15,7 @@ class CustomButton extends StatelessWidget {
       {this.onPressed, this.title, this.color, this.isLoading = false});
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       //margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
      // height: MediaQuery.of(context).size.height / 14,
      // width: MediaQuery.of(context).size.width / 1.2,

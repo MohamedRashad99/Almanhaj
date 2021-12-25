@@ -2,11 +2,9 @@ import 'dart:async';
 
 import 'package:almanhaj/generated/assets.dart';
 import 'package:flutter/material.dart';
-import 'package:almanhaj/screens/components/constants.dart';
-import 'package:almanhaj/screens/student_class_select/page/view.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import '../components/constants.dart';
+import '../student_class_select/page/view.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);

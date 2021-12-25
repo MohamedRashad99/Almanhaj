@@ -21,7 +21,6 @@ class _ListOfSelectedCourseState extends State<ListOfSelectedCourse> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: kBackgroundColor,
@@ -44,7 +43,7 @@ class _ListOfSelectedCourseState extends State<ListOfSelectedCourse> {
               //shrinkWrap: true,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, int index) {
-                return   CardLesson(
+                return   const CardLesson(
                   id: 3,
                    title1:  "مذكرة تأسيس لغه عربية أولي ثانوي 2021",
                     title2: "تم تصوير كل خطوه وكل جزء من التسطيب بحيث توصل المعلومه كامله للما الصورة اللي في البوست دا كل تعريفات الجهاز اتعملمت من الوندوز دون الاحتياج",
