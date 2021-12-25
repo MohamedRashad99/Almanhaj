@@ -1,22 +1,22 @@
 import 'dart:developer';
 
 import 'package:almanhaj/local_storage/local_storage.dart';
+import 'package:almanhaj/screens/student_class_select/page/card_selection/model/model.dart';
 import 'package:flutter/material.dart';
 import 'package:almanhaj/screens/components/constants.dart';
 // ignore: use_key_in_widget_constructors, must_be_immutable
 class ClassItemPressed extends StatefulWidget {
    bool isPrssed ;
-   final String name ;
-   final int id ;
+   final Classes classes ;
+   final ValueChanged<Classes> onSelected;
 
-  ClassItemPressed({Key? key, this.isPrssed=false, required this.name, required this.id}) : super(key: key);
+  ClassItemPressed({Key? key, this.isPrssed=false, required this.classes,required this.onSelected}) : super(key: key);
 
   @override
   State<ClassItemPressed> createState() => _ClassItemPressedState();
 }
 
 class _ClassItemPressedState extends State<ClassItemPressed> {
-  final List<String> selected =[];
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -25,11 +25,9 @@ class _ClassItemPressedState extends State<ClassItemPressed> {
       onTap: (){
         setState(() {
           widget.isPrssed=!widget.isPrssed;
-          selected.add(widget.name);
-          log(selected.toString());
-          log(selected.length.toString());
-          LocalStorage.setString('selectedClassesName', widget.name );
-          LocalStorage.setInt('selectedClassesId', widget.id );
+          widget.onSelected(widget.classes);
+          LocalStorage.setString('selectedClassesName', widget.classes.name );
+          LocalStorage.setInt('selectedClassesId', widget.classes.id );
 
         });
       },
@@ -71,7 +69,7 @@ class _ClassItemPressedState extends State<ClassItemPressed> {
             ),
             spaceW(12),
             Text(
-              widget.name,
+              widget.classes.name,
               style: headingStyle.copyWith(
                   color:  HexColor("#323232"),
                   fontSize: 25),

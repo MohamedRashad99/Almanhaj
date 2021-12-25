@@ -5,8 +5,8 @@ class Classes extends Equatable {
   List<Object?> get props => [
     id , name
   ];
-  final int? id;
-  final String? name;
+  final int id;
+  final String name;
 
   const Classes({required this.id, required this.name});
 
