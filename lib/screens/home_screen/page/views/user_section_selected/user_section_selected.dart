@@ -239,7 +239,6 @@ class _UserSectionSelectedState extends State<UserSectionSelected> {
                       ),
                     if (state is ShowSubjectsError && !widget.isEmpty)
                       Center(child: Text(state.msg)),
-                    //const SizedBox(),
                     if(widget.isEmpty)
                      const Text("غير متوفر الاّن " ,style: TextStyle(color: Colors.black),),
                   ],

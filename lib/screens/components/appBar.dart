@@ -4,6 +4,8 @@ import 'package:almanhaj/screens/search_bar/page/view.dart';
 import 'package:flutter/material.dart';
 import 'package:almanhaj/screens/home_screen/view.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
+
 
 import 'constants.dart';
 
@@ -65,6 +67,9 @@ customAppBar({required BuildContext context, required VoidCallback press} ) {
     actions: [
       IconButton(
           onPressed: () {
+
+           // SearchView
+            Get.to(()=> const SearchView());
             //showSearch(context: context, delegate: SubjectOfSearch());
           },
           icon: const Icon(
