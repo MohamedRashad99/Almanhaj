@@ -20,6 +20,7 @@ class UserSectionSelected extends StatefulWidget {
   final String? section1;
   final String? section2;
   final VoidCallback? onTapSection1;
+  bool isEmpty;
   final VoidCallback? onTapSection2;
 
   late bool isPrssed1;
@@ -27,6 +28,7 @@ class UserSectionSelected extends StatefulWidget {
   late bool isPrssed2;
 
   UserSectionSelected({
+    this.isEmpty = false,
     this.isPrssed1 = false,
     this.isPrssed2 = false,
     required this.className,
@@ -44,196 +46,208 @@ class UserSectionSelected extends StatefulWidget {
 
 class _UserSectionSelectedState extends State<UserSectionSelected> {
   int? value;
-  int sectionId=0;
 
   @override
   Widget build(BuildContext context) {
+    final int sectionId1 = LocalStorage.getInt('KeySection1');
+    final int sectionId2 = LocalStorage.getInt('KeySection2');
+    int id = sectionId1;
+    log('seeeeeeeeee' + id.toString());
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 12),
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        // color: Colors.amber,
-        height: height * 0.2,
-        //width: width,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          //color: Colors.amber,
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          SizedBox(
-            height: height * 0.02,
+    return BlocProvider(
+      create: (context) => ShowSubjectsCubit(
+        id: id,
+      ),
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          // color: Colors.amber,
+          height: height * 0.2,
+          //width: width,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            //color: Colors.amber,
+            borderRadius: BorderRadius.circular(15),
           ),
-          Row(
-            children: [
-              Row(
-                children: [
-                  const Icon(
-                    Icons.more_vert,
-                    color: Colors.black,
-                    size: 30,
-                  ),
-                  spaceW(5),
-                  Text(
-                    widget.className!,
-                    style: headingStyle.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        color: Colors.black),
-                  ),
-                ],
-              ),
-              SizedBox(
-                width: width * 0.08,
-              ),
-              InkWell(
-                onTap: () {
-                  widget.onTapAllNotes;
-                  navigateTo(context, ListOfAllSectionNotes());
-                },
-                child: Row(
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            SizedBox(
+              height: height * 0.02,
+            ),
+            Row(
+              children: [
+                Row(
                   children: [
-                    Icon(
-                      Icons.add,
-                      color: HexColor("#3080D1"),
+                    const Icon(
+                      Icons.more_vert,
+                      color: Colors.black,
                       size: 30,
                     ),
                     spaceW(5),
                     Text(
-                      widget.allNotes!,
+                      widget.className!,
                       style: headingStyle.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                        color: kPrimaryBlueColor,
-                      ),
-                    )
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                          color: Colors.black),
+                    ),
                   ],
                 ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: height * 0.02,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              InkWell(
-                onTap: () {
-                  widget.onTapSection1;
-                  setState(() {
-                    widget.isPrssed1 = true;
-                    sectionId = LocalStorage.getInt('KeySection1');
-                    widget.isPrssed2 = false;
-                    value = 1;
-                  });
-                },
-                child: Text(
-                  widget.section1!,
-                  style: headingStyle.copyWith(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      color: value == 1 ? kPrimaryBlueColor : Colors.black),
+                SizedBox(
+                  width: width * 0.08,
                 ),
-              ),
-              Container(
-                color: Colors.white,
-                width: width * 0.1,
-                child: Center(
-                    child: Text("|",
+                InkWell(
+                  onTap: () {
+                    widget.onTapAllNotes;
+                    navigateTo(context, ListOfAllSectionNotes());
+                  },
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.add,
+                        color: HexColor("#3080D1"),
+                        size: 30,
+                      ),
+                      spaceW(5),
+                      Text(
+                        widget.allNotes!,
                         style: headingStyle.copyWith(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                            color: Colors.black))),
-              ),
-              InkWell(
-                onTap: () {
-                  widget.onTapSection2;
-                  setState(() {
-                    sectionId =  LocalStorage.getInt('KeySection2');
-                    widget.isPrssed2 = true;
-                    widget.isPrssed1 = false;
-                    value = 2;
-                  });
-                },
-                child: Text(
-                  widget.section2!,
-                  style: headingStyle.copyWith(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    color: value == 2 ? kPrimaryBlueColor : Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          color: kPrimaryBlueColor,
+                        ),
+                      )
+                    ],
                   ),
                 ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: height * 0.020,
-          ),
-          BlocProvider(
-            create: (context) => ShowSubjectsCubit(id: sectionId),
-            child: BlocConsumer<ShowSubjectsCubit, ShowSubjectsState>(
+              ],
+            ),
+            SizedBox(
+              height: height * 0.02,
+            ),
+            BlocConsumer<ShowSubjectsCubit, ShowSubjectsState>(
               listener: (context, state) {},
               builder: (context, state) {
-
-                if (state is ShowSubjectsLoading) {
-                  return const Center(
-                      child: SpinKitChasingDots(
-                        color: kPrimaryBlueColor,
-                        size: 10,
-                      ));
-                }
-                if (state is ShowSubjectsSuccess){
-                  return SizedBox(
-                    width: width,
-                    height: height * 0.03,
-                    child: ListView.builder(
-                      primary: true,
-                      shrinkWrap: true,
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: state.showSubjects.length,
-                      itemBuilder: (context, int index) {
-                        return InkWell(
+                return Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
                           onTap: () {
-                            navigateTo(context, ListOfSelectedCourse());
+                            widget.onTapSection1;
+                            setState(() {
+                              widget.isPrssed1 = true;
+                              widget.isPrssed2 = false;
+                              value = 1;
+                            });
                           },
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 3),
-                            height: height * 0.03,
-                            width: width * 0.15,
-                            decoration: BoxDecoration(
-                              color: kPrimaryBlueColor.withOpacity(0.2),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Center(
-                              child: Text(
-                                state.showSubjects[index].name!,
-                                style: headingStyle.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 8,
-                                    color: Colors.black),
-                              ),
+                          child: Text(
+                            widget.section1!,
+                            style: headingStyle.copyWith(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                color: value == 1
+                                    ? kPrimaryBlueColor
+                                    : Colors.black),
+                          ),
+                        ),
+                        Container(
+                          color: Colors.white,
+                          width: width * 0.1,
+                          child: Center(
+                              child: Text("|",
+                                  style: headingStyle.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                      color: Colors.black))),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            widget.onTapSection2;
+                            setState(() {
+                              widget.isPrssed2 = true;
+                              ShowSubjectsCubit.of(context)
+                                  .getShowSubjects(id: sectionId2);
+                              widget.isPrssed1 = false;
+                              value = 2;
+                            });
+                          },
+                          child: Text(
+                            widget.section2!,
+                            style: headingStyle.copyWith(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              color:
+                                  value == 2 ? kPrimaryBlueColor : Colors.black,
                             ),
                           ),
-                        );
-                      },
+                        ),
+                      ],
                     ),
-                  );
-                }
-                if (state is ShowSubjectsError) {
-                  return Center(child: Text(state.msg));
-                }
-                return const SizedBox();
+                    SizedBox(
+                      height: height * 0.020,
+                    ),
 
+                    if (state is ShowSubjectsLoading && !widget.isEmpty)
+                      const Center(
+                          child: SpinKitChasingDots(
+                        color: kPrimaryBlueColor,
+                        size: 10,
+                      )),
+                    if (state is ShowSubjectsSuccess && !widget.isEmpty)
+                      SizedBox(
+                        width: width,
+                        height: height * 0.03,
+                        child: ListView.builder(
+                          primary: true,
+                          shrinkWrap: true,
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: state.showSubjects.length,
+                          itemBuilder: (context, int index) {
+                            return InkWell(
+                              onTap: () {
+                                navigateTo(context, ListOfSelectedCourse());
+                              },
+                              child: Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 3),
+                                height: height * 0.03,
+                                width: width * 0.15,
+                                decoration: BoxDecoration(
+                                  color: kPrimaryBlueColor.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    state.showSubjects[index].name!,
+                                    style: headingStyle.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 8,
+                                        color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    if (state is ShowSubjectsError && !widget.isEmpty)
+                      Center(child: Text(state.msg)),
+                    //const SizedBox(),
+                    if(widget.isEmpty)
+                     const Text("غير متوفر الاّن " ,style: TextStyle(color: Colors.black),),
+                  ],
+                );
               },
             ),
-          ),
-        ]),
+          ]),
+        ),
       ),
     );
   }

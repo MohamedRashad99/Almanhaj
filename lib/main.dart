@@ -1,3 +1,4 @@
+import 'package:almanhaj/config/bloc_observer.dart';
 import 'package:almanhaj/local_storage/local_storage.dart';
 import 'package:almanhaj/screens/home_screen/page/views/user_section_selected/cubit_show_subjects/show_subjects_cubit.dart';
 import 'screens/home_screen/page/views/banner_slider/cubit/slider_cubit.dart';
@@ -15,6 +16,7 @@ import 'screens/splash_screen/view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer=MyBlocObserver();
   await Nations.boot();
   await LocalStorage.boot();
   await QTheme.boot(ThemeConfig());

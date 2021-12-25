@@ -25,6 +25,7 @@ class ShowSubjectsCubit extends Cubit<ShowSubjectsState> {
 
 
   Future<void> getShowSubjects({required int id}) async {
+    showSubjects = [];
     emit(ShowSubjectsLoading());
     try {
       final res = await NetWork.get("/categories", queryParams: {

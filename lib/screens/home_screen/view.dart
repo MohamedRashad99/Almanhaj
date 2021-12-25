@@ -126,6 +126,7 @@ class _HomeViewState extends State<HomeView> {
                           return Container(
                             margin: const EdgeInsets.symmetric(vertical: 5),
                             child: UserSectionSelected(
+                              isEmpty: true,
                               className: name,
                               allNotes: "كل الملازم والمذكرات",
                               onTapAllNotes: () {},
@@ -139,6 +140,8 @@ class _HomeViewState extends State<HomeView> {
                         if (state is SectionsNamesSuccess) {
                           LocalStorage.setInt('KeySection1', state.sectionsNames[0].id);
                           LocalStorage.setInt('KeySection2', state.sectionsNames[1].id);
+                          log('iiiiiiiiiiiiiiid'+LocalStorage.getInt('KeySection1').toString());
+                          log('iiiiiiiiiiiiiiid'+LocalStorage.getInt('KeySection2').toString());
                           return Container(
                             margin: const EdgeInsets.symmetric(vertical: 5),
                             child: UserSectionSelected(

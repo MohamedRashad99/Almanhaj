@@ -41,9 +41,11 @@ class SectionsNamesCubit extends Cubit<SectionsNamesState> {
         log(res.data.toString());
         if(sectionsNames.isEmpty){
           emit(SectionsNamesEmpty());
+        }else{
+          emit(SectionsNamesSuccess(sectionsNames: sectionsNames));
         }
 
-        emit(SectionsNamesSuccess(sectionsNames: sectionsNames));
+
 
 
       }catch(e ,es){
