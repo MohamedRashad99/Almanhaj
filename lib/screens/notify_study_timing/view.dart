@@ -42,6 +42,10 @@ class NotifyStudyTimingView extends StatelessWidget {
                         child: FlatButton(
                           color: HexColor("#3080D1"),
                           onPressed: () {
+                            final date= DateTime.utc(2021,1,1,1,0,0,0,0);
+                            // first get current date DateTime.now()
+
+
                             showMyDialog(
                                 context: context,
                                 title: '',
@@ -73,9 +77,7 @@ class NotifyStudyTimingView extends StatelessWidget {
                       // ignore: deprecated_member_use
                       FlatButton(
                           onPressed: () async {
-                            // SharedPreferences preferences =
-                            // await SharedPreferences.getInstance();
-                            // preferences.setBool('skip_time', true);
+
                             Get.offAll(() => const HomeView());
 
                           },
@@ -90,4 +92,11 @@ class NotifyStudyTimingView extends StatelessWidget {
               ],
             )));
   }
+}
+class DaysWithId{
+ final String day;
+ final int id;
+  DaysWithId({ required this.day,required this.id});
+
+
 }

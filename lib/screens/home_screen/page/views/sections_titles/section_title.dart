@@ -52,7 +52,6 @@ class SectionTitles extends StatelessWidget {
             InkWell(
               onTap:
                 onTapDescription2,
-                //Get.to(()=>ListOfSelectedCourse());
 
               child: Row(
                 children: [

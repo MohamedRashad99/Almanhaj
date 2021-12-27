@@ -57,6 +57,7 @@ dependencies:
   rxdart: ^0.27.3
   flutter_native_timezone: ^2.0.0
   flutter_local_notifications: ^9.1.5
+  google_mobile_ads: ^0.13.0
 
 
 

@@ -38,7 +38,9 @@ class _SelectRealarmState extends State<SelectRealarm> {
                 color: HexColor("#F1F1F1"),
               ),
               child: DropdownButton<String>(
-                onTap: (){},
+                onTap: (){
+                //fianl date= DateTime.utc(2021,1,1,1,0,0,0,0);
+                },
                 isExpanded: true,
                 icon: const Icon(Icons.keyboard_arrow_down_sharp,color: Colors.black,),
                underline: const SizedBox.shrink(),

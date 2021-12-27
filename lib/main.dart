@@ -1,5 +1,6 @@
 import 'package:almanhaj/config/bloc_observer.dart';
 import 'package:almanhaj/local_storage/local_storage.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'screens/home_screen/page/views/banner_slider/cubit/slider_cubit.dart';
 import 'screens/student_class_select/cubit/stages_cubit.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'screens/splash_screen/view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
   Bloc.observer=MyBlocObserver();
   await Nations.boot();
   await LocalStorage.boot();

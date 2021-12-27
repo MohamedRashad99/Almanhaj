@@ -1,7 +1,9 @@
 // ignore_for_file: use_key_in_widget_constructors
 
+import 'dart:async';
 import 'dart:developer';
 
+import 'package:almanhaj/config/ads_manager.dart';
 import 'package:almanhaj/generated/assets.dart';
 import 'package:almanhaj/local_storage/local_storage.dart';
 import 'package:almanhaj/screens/banner_details/page/views/ads_spaces.dart';
@@ -12,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'page/views/banner_slider/banner_slider.dart';
 import '../components/appBar.dart';
 import '../components/constants.dart';
@@ -29,6 +32,57 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
+
+  /// ********************** Ads Concept *************************
+  late BannerAd _bannerAd;
+
+  bool _isBannerAdReady = false;
+
+  late InterstitialAd _interstitialAd;
+
+  bool _isInterstitialAdReady = false;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _bannerAd = BannerAd(
+      // Change Banner Size According to Ur Need
+        size: AdSize.banner,
+        adUnitId: AdHelper.getBannerAdUnitId,
+        listener: BannerAdListener(onAdLoaded: (_) {
+          setState(() {
+            _isBannerAdReady = true;
+          });
+        }, onAdFailedToLoad: (ad, LoadAdError error) {
+          print("Failed to Load A Banner Ad${error.message}");
+          _isBannerAdReady = false;
+          ad.dispose();
+        }),
+        request: const AdRequest())
+      ..load();
+    //Interstitial Ads
+    InterstitialAd.load(
+        adUnitId: AdHelper.getInterstitialAdUnitId,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(onAdLoaded: (ad) {
+          _interstitialAd = ad;
+          _isInterstitialAdReady = true;
+        }, onAdFailedToLoad: (LoadAdError error) {
+          log("failed to Load Interstitial Ad ${error.message}");
+        }));
+
+
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _bannerAd.dispose();
+    _interstitialAd.dispose();
+  }
+
+  /// -----------------------------------------------------------------------
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +105,7 @@ class _HomeViewState extends State<HomeView> {
           Column(
             children: [
               Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 height: height * 0.42,
                 width: width,
                 decoration: BoxDecoration(
@@ -83,7 +136,9 @@ class _HomeViewState extends State<HomeView> {
                               title1: "أحداث الاضافات",
                               title2: " كل الملازم و المذكرات",
                               onTapDescription2: () {
-                                //interstitialAd.show();
+                                _isInterstitialAdReady ? _interstitialAd.show : "مجاااااااااااااااااااااااش";
+                                log('${ _isInterstitialAdReady ? _interstitialAd.show : "مجاااااااااااااااااااااااش"}');
+
                                 Get.to(() =>
                                     ListOfNewestAdded(sliders: state.sliders));
                               }),
