@@ -17,6 +17,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class ListOfAllSectionNotes extends StatefulWidget {
+  final int id;
+
+  const ListOfAllSectionNotes({Key? key,required this.id}) : super(key: key);
   @override
   State<ListOfAllSectionNotes> createState() => _ListOfSelectedCourseState();
 }
@@ -26,8 +29,8 @@ class _ListOfSelectedCourseState extends State<ListOfAllSectionNotes> {
 
   @override
   Widget build(BuildContext context) {
-    final id2 = LocalStorage.getInt("selectedClassesId");
-    log(id2.toString());
+    // final id2 = LocalStorage.getInt("selectedClassesId");
+    // log(id2.toString());
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       key: scaffoldKey,
@@ -40,7 +43,7 @@ class _ListOfSelectedCourseState extends State<ListOfAllSectionNotes> {
       endDrawer: MenueItems(),
 
       body: BlocProvider(
-        create: (context) => AllSectionsNotesCubit(id: id2),
+        create: (context) => AllSectionsNotesCubit(id: widget.id),
        child: BlocConsumer<AllSectionsNotesCubit, AllSectionsNotesState>(
         listener: (context, state) {},
         builder: (context, state) {

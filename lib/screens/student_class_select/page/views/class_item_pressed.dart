@@ -25,8 +25,7 @@ class _ClassItemPressedState extends State<ClassItemPressed> {
         setState(() {
           widget.isPrssed=!widget.isPrssed;
           widget.onSelected(widget.classes);
-          LocalStorage.setString('selectedClassesName', widget.classes.name );
-          LocalStorage.setInt('selectedClassesId', widget.classes.id );
+       
 
         });
       },

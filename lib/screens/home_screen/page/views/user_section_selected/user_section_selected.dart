@@ -15,6 +15,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 // ignore: must_be_immutable
 class UserSectionSelected extends StatefulWidget {
+  final int classId;
   final String? className;
   final String? allNotes;
   final VoidCallback? onTapAllNotes;
@@ -32,6 +33,7 @@ class UserSectionSelected extends StatefulWidget {
     this.isEmpty = false,
     this.isPrssed1 = false,
     this.isPrssed2 = false,
+    required this.classId,
     required this.className,
     required this.allNotes,
     required this.onTapAllNotes,
@@ -95,12 +97,12 @@ class _UserSectionSelectedState extends State<UserSectionSelected> {
                   ],
                 ),
                 SizedBox(
-                  width: width * 0.08,
+                  width: width * 0.05,
                 ),
                 InkWell(
                   onTap: () {
                     widget.onTapAllNotes;
-                    navigateTo(context, ListOfAllSectionNotes());
+                    navigateTo(context, ListOfAllSectionNotes(id: widget.classId,));
                   },
                   child: Row(
                     children: [

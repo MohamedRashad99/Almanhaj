@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:almanhaj/config/keys.dart';
+import 'package:almanhaj/local_storage/local_storage.dart';
 import 'package:almanhaj/screens/components/constants.dart';
 import 'package:almanhaj/screens/student_class_select/page/card_selection/cubit/card_selection_cubit.dart';
 import 'package:almanhaj/screens/student_class_select/page/card_selection/model/model.dart';
@@ -13,8 +15,9 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 // ignore: use_key_in_widget_constructors
 class CardSection extends StatefulWidget {
   final int id;
+  final ValueChanged<Classes> onSelected;
 
-  const CardSection({Key? key, required this.id}) : super(key: key);
+  const CardSection({Key? key, required this.id,required this.onSelected}) : super(key: key);
 
   @override
   State<CardSection> createState() => _CardSectionState();
@@ -22,44 +25,46 @@ class CardSection extends StatefulWidget {
 
 class _CardSectionState extends State<CardSection> {
 
-  final List<Classes> selecteClasses =[];
 
-  void onSeleted(Classes classes){
-    if(selecteClasses.contains(classes)){
-      selecteClasses.remove(classes);
-    }else{
-      selecteClasses.add(classes);
-    }
-    log(selecteClasses.toString());
-    log(selecteClasses.length.toString());
-  }
 
 
 
   @override
   Widget build(BuildContext context) {
-    final List<String> selected =[];
+    final map2 = LocalStorage.getMap(KeysConfig.token);
+    final List<Classes> selectedClassesList =[];
+    map2.forEach((key, value) {
+      selectedClassesList.add(Classes(id: int.parse(key), name: value));
+    });
+
+
     return BlocProvider(
       create: (context) => CardSelectionCubit(id: widget.id),
       child: BlocConsumer<CardSelectionCubit, CardSelectionState>(
         listener: (context, state) {},
         builder: (context, state) {
           if (state is CardSelectionSuccess) {
-            // return ListView.builder(
-            //   shrinkWrap: true,
-            //   itemCount: state.classes.length,
-            //   itemBuilder: (BuildContext context, int index) {
-            //     return ClassItemPressed(id: state.classes[index].id!,name: state.classes[index].name!);
-            //   },
-            //
-            //
-            // );
-            return ListView(
+            return ListView.builder(
               shrinkWrap: true,
-              children: state.classes.map((e) {
-                return ClassItemPressed(classes: e,onSelected: onSeleted,);
-              }).toList(),
+              itemCount: state.classes.length,
+              itemBuilder: (BuildContext context, int index) {
+                if(selectedClassesList.isNotEmpty && selectedClassesList.contains(state.classes[index]) ){
+
+                    return ClassItemPressed(classes: state.classes[index],onSelected: widget.onSelected,isPrssed: true,);
+
+                }else {
+                  return ClassItemPressed(classes: state.classes[index],onSelected: widget.onSelected,);
+                }
+              },
+
+
             );
+            // return ListView(
+            //   shrinkWrap: true,
+            //   children: state.classes.map((e) {
+            //     return ClassItemPressed();
+            //   }).toList(),
+            // );
           }
           if (state is CardSelectionLoading) {
             return const Center(child: SpinKitChasingDots(
@@ -77,12 +82,3 @@ class _CardSectionState extends State<CardSection> {
   }
 }
 
-// return ListView.builder(
-//   shrinkWrap: true,
-//   itemCount: state.classes.length,
-//   itemBuilder: (BuildContext context, int index) {
-//     return ClassItemPressed(id: state.classes[index].id!,name: state.classes[index].name!);
-//   },
-//
-//
-// );

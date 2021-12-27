@@ -4,12 +4,14 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:almanhaj/config/ads_manager.dart';
+import 'package:almanhaj/config/keys.dart';
 import 'package:almanhaj/generated/assets.dart';
 import 'package:almanhaj/local_storage/local_storage.dart';
 import 'package:almanhaj/screens/banner_details/page/views/ads_spaces.dart';
 import 'package:almanhaj/screens/home_screen/page/views/banner_slider/cubit/slider_cubit.dart';
 import 'package:almanhaj/screens/home_screen/page/views/user_section_selected/cubit_section_name/sections_names_cubit.dart';
 import 'package:almanhaj/screens/list_of_newest_added/view.dart';
+import 'package:almanhaj/screens/student_class_select/page/card_selection/model/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -86,6 +88,11 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    final map2 = LocalStorage.getMap(KeysConfig.token);
+    final List<Classes> selectedClassesList =[];
+    map2.forEach((key, value) {
+      selectedClassesList.add(Classes(id: int.parse(key), name: value));
+    });
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -155,15 +162,15 @@ class _HomeViewState extends State<HomeView> {
               ),
               const AdsSpaces(),
               ListView.builder(
-                itemCount: 3,
+                itemCount:selectedClassesList.length,
                 shrinkWrap: true,
                 primary: true,
                 physics: const BouncingScrollPhysics(),
                 scrollDirection: Axis.vertical,
                 itemBuilder: (context, int index) {
-                  final name = LocalStorage.getString("selectedClassesName");
-                  final id2 = LocalStorage.getInt("selectedClassesId");
-                  log(id2.toString());
+                  // final id2 = LocalStorage.getInt("selectedClassesId");
+                  // log(id2.toString());
+                  final id2 = selectedClassesList[index].id;
 
                   return BlocProvider(
                     create: (context) => SectionsNamesCubit(id: id2),
@@ -182,7 +189,8 @@ class _HomeViewState extends State<HomeView> {
                             margin: const EdgeInsets.symmetric(vertical: 5),
                             child: UserSectionSelected(
                               isEmpty: true,
-                              className: name,
+                              classId:  selectedClassesList[index].id,
+                              className: selectedClassesList[index].name,
                               allNotes: "كل الملازم والمذكرات",
                               onTapAllNotes: () {},
                               section1: 'الفصل الدراسي الاول',
@@ -200,7 +208,8 @@ class _HomeViewState extends State<HomeView> {
                           return Container(
                             margin: const EdgeInsets.symmetric(vertical: 5),
                             child: UserSectionSelected(
-                              className: name,
+                              className: selectedClassesList[index].name,
+                              classId:  selectedClassesList[index].id,
                               allNotes: "كل الملازم والمذكرات",
                               onTapAllNotes: () {},
                               section1: state.sectionsNames[0].name,
@@ -219,6 +228,8 @@ class _HomeViewState extends State<HomeView> {
                   );
                 },
               ),
+              if(selectedClassesList.isEmpty)
+               const Text("من فضلك اضف بعض المواد",style: TextStyle(color: Colors.black),),
               SizedBox(
                 height: height * 0.1,
               ),
