@@ -2,6 +2,7 @@
 
 import 'dart:developer';
 
+import 'package:almanhaj/config/ads_manager.dart';
 import 'package:almanhaj/local_storage/local_storage.dart';
 import 'package:almanhaj/screens/all_sections_notes/page/view.dart';
 import 'package:almanhaj/screens/home_screen/page/views/user_section_selected/cubit_show_subjects/show_subjects_cubit.dart';
@@ -12,6 +13,8 @@ import 'package:almanhaj/screens/components/fast_widget.dart';
 import 'package:almanhaj/screens/list_of_selected_course/view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 // ignore: must_be_immutable
 class UserSectionSelected extends StatefulWidget {
@@ -49,6 +52,42 @@ class UserSectionSelected extends StatefulWidget {
 
 class _UserSectionSelectedState extends State<UserSectionSelected> {
   int? value;
+
+
+  /// ********************** Ads Concept *************************
+
+
+  late InterstitialAd _interstitialAd;
+
+  bool _isInterstitialAdReady = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    //Interstitial Ads
+    InterstitialAd.load(
+
+        adUnitId: AdHelper.getInterstitialAdUnitId,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(onAdLoaded: (ad) {
+          _interstitialAd = ad;
+          _isInterstitialAdReady = true;
+        }, onAdFailedToLoad: (LoadAdError error) {
+          log("failed to Load Interstitial Ad ${error.message}");
+        }));
+
+
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    _interstitialAd.dispose();
+  }
+
+  /// -----------------------------------------------------------------------
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +141,9 @@ class _UserSectionSelectedState extends State<UserSectionSelected> {
                 InkWell(
                   onTap: () {
                     widget.onTapAllNotes;
-                    navigateTo(context, ListOfAllSectionNotes(id: widget.classId,));
+                    log('${ _isInterstitialAdReady ? _interstitialAd.show() : "مجاااااااااااااااااااااااش"}');
+
+                    Get.to(()=>ListOfAllSectionNotes(id: widget.classId,) );
                   },
                   child: Row(
                     children: [

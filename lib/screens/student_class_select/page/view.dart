@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:almanhaj/config/keys.dart';
@@ -14,6 +13,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'card_selection/class_card.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+
 // ignore: use_key_in_widget_constructors
 class StudentClassSelectView extends StatefulWidget {
   @override
@@ -23,15 +23,11 @@ class StudentClassSelectView extends StatefulWidget {
 class _StudentClassSelectViewState extends State<StudentClassSelectView> {
   List<Classes> selectedClasses = GetSelectedList.getList();
 
+  void onSelected(Classes classes) {
 
-
-
-  void onSelected(Classes classes){
-    // selectedClasses = [];
-
-    if(selectedClasses.contains(classes)){
+    if (selectedClasses.contains(classes)) {
       selectedClasses.remove(classes);
-    }else{
+    } else {
       selectedClasses.add(classes);
     }
     log(selectedClasses.toString());
@@ -47,22 +43,19 @@ class _StudentClassSelectViewState extends State<StudentClassSelectView> {
         backgroundColor: kHomeColor,
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-         child: Column(
+          child: Column(
             children: [
-              BarDescription(
-                  "assets/image/logo2021-2.png",
-                  KeysConfig.selectStage,
-                  KeysConfig.selectMore
-              ),
+              BarDescription("assets/image/logo2021-2.png",
+                  KeysConfig.selectStage, KeysConfig.selectMore),
               BlocConsumer<StagesCubit, StagesState>(
                 listener: (context, state) {},
                 builder: (context, state) {
                   if (state is StagesLoading) {
                     return const Center(
                         child: SpinKitChasingDots(
-                          color: kPrimaryBlueColor,
-                          size: 40,
-                        ));
+                      color: kPrimaryBlueColor,
+                      size: 40,
+                    ));
                   }
                   if (state is StagesSuccess) {
                     return ListView.builder(
@@ -70,27 +63,23 @@ class _StudentClassSelectViewState extends State<StudentClassSelectView> {
                       shrinkWrap: true,
                       itemCount: state.stages.length,
                       itemBuilder: (context, index) {
-
                         return Directionality(
                           textDirection: TextDirection.rtl,
                           child: Container(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: width * 0.1),
+                            margin:
+                                EdgeInsets.symmetric(horizontal: width * 0.1),
                             // color: Colors.red,
                             child: Column(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              mainAxisAlignment:
-                              MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Text(
                                   state.stages[index].name!,
                                   style: headingStyle.copyWith(
-                                      color: HexColor("#3080D1"),
-                                      fontSize: 25),
+                                      color: HexColor("#3080D1"), fontSize: 25),
                                 ),
                                 CardSection(
-                                    id: state.stages[index].id!,
+                                  id: state.stages[index].id!,
                                   onSelected: onSelected,
                                 ),
                               ],
@@ -114,7 +103,9 @@ class _StudentClassSelectViewState extends State<StudentClassSelectView> {
                   press: () {
                     Get.offAll(() => NotifyStudyTimingView());
 
-                    final Map<String,dynamic> map1 = { for (var e in selectedClasses) e.id.toString() : e.name };
+                    final Map<String, dynamic> map1 = {
+                      for (var e in selectedClasses) e.id.toString(): e.name
+                    };
                     LocalStorage.setMap(KeysConfig.token, map1);
                     /*
                       showMyDialog(

@@ -1,5 +1,4 @@
 
-import 'package:almanhaj/local_storage/local_storage.dart';
 import 'package:almanhaj/screens/student_class_select/page/card_selection/model/model.dart';
 import 'package:flutter/material.dart';
 import 'package:almanhaj/screens/components/constants.dart';

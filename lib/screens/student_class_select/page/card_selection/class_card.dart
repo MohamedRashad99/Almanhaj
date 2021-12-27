@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:almanhaj/config/keys.dart';
 import 'package:almanhaj/local_storage/local_storage.dart';
@@ -59,12 +58,6 @@ class _CardSectionState extends State<CardSection> {
 
 
             );
-            // return ListView(
-            //   shrinkWrap: true,
-            //   children: state.classes.map((e) {
-            //     return ClassItemPressed();
-            //   }).toList(),
-            // );
           }
           if (state is CardSelectionLoading) {
             return const Center(child: SpinKitChasingDots(

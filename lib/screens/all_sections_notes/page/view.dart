@@ -2,7 +2,6 @@
 
 import 'dart:developer';
 
-import 'package:almanhaj/local_storage/local_storage.dart';
 
 import '../cubit/all_sections_notes_cubit.dart';
 import 'views/subject_header.dart';

@@ -19,11 +19,29 @@ class AllSectionsNotesCubit extends Cubit<AllSectionsNotesState> {
     return BlocProvider.of(context);
   }
 
+  // int _pageNo = 0;
+  // bool _canLoadMore = true;
+  // bool get canLoadMore => _canLoadMore;
   List <AllSectionSNotes> allSectionSNotes =[];
+
+  //
+  // Future<void> refresh() async {
+  //   log('refresh()');
+  //   _pageNo = 0;
+  //   _canLoadMore = true;
+  //   allSectionSNotes.clear();
+  //   loadMore();
+  // }
   Future<void> getAllSectionsNotes({required int id}) async {
+
     emit(AllSectionsNotesLoading());
 
+
     try{
+      // if (!_canLoadMore) return;
+      // log('now i will load page ${_pageNo + 1}');
+      // emit(_pageNo == 0 ? AllSectionsNotesLoading() : AllSectionsNotesLoadingMore(allSectionSNotes));
+
       final res = await NetWork.get("/posts", queryParams: {
         'categories': '$id',
         'per_page': '10',

@@ -1,11 +1,15 @@
 // ignore_for_file: use_key_in_widget_constructors
 
+import 'dart:developer';
+
+import 'package:almanhaj/config/ads_manager.dart';
 import 'package:almanhaj/screens/banner_details/cubit/slider_details_cubit.dart';
 import 'package:almanhaj/screens/banner_details/page/views/ads_spaces.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'page/views/content_subject_header.dart';
 import 'page/views/subject_description_data.dart';
 import 'page/views/subject_download_file.dart';
@@ -24,6 +28,56 @@ class BannerDetailsView extends StatefulWidget {
 
 class _BannerDetailsViewState extends State<BannerDetailsView> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
+  /// ********************** Ads Concept *************************
+  late BannerAd _bannerAd;
+
+  bool _isBannerAdReady = false;
+
+  late InterstitialAd _interstitialAd;
+
+  bool _isInterstitialAdReady = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _bannerAd = BannerAd(
+      // Change Banner Size According to Ur Need
+        size: AdSize.banner,
+        adUnitId: AdHelper.getBannerAdUnitId,
+        listener: BannerAdListener(onAdLoaded: (_) {
+          setState(() {
+            _isBannerAdReady = true;
+          });
+        }, onAdFailedToLoad: (ad, LoadAdError error) {
+          log("Failed to Load A Banner Ad${error.message}");
+          _isBannerAdReady = false;
+          ad.dispose();
+        }),
+        request: const AdRequest())
+      ..load();
+    //Interstitial Ads
+    InterstitialAd.load(
+
+        adUnitId: AdHelper.getInterstitialAdUnitId,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(onAdLoaded: (ad) {
+          _interstitialAd = ad;
+          _isInterstitialAdReady = true;
+        }, onAdFailedToLoad: (LoadAdError error) {
+          log("failed to Load Interstitial Ad ${error.message}");
+        }));
+
+
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _bannerAd.dispose();
+    _interstitialAd.dispose();
+  }
+
+  /// -----------------------------------------------------------------------
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +130,12 @@ class _BannerDetailsViewState extends State<BannerDetailsView> {
                                         fit: BoxFit.cover),
                                   ),
                                 ):const SizedBox(),
-                                const AdsSpaces(),
+                                if (_isBannerAdReady)
+                                  SizedBox(
+                                    height: _bannerAd.size.height.toDouble(),
+                                    width: _bannerAd.size.width.toDouble(),
+                                    child: AdWidget(ad: _bannerAd),
+                                  ),
                                 ContentSubjectHeader(
                                     title: state.sliderDetails.title.rendered,
                                     date: state.sliderDetails.xDate,
@@ -84,20 +143,15 @@ class _BannerDetailsViewState extends State<BannerDetailsView> {
                                 ),
                                 SubjectDescriptionView(
                                     description:  state.sliderDetails.content.rendered),
-                                const AdsSpaces(),
+                                //TODO Ads
+                              //  const AdsSpaces(),
                                  SubjectDownloadFile(
-                                  /*title: '${snapshot.data['filetitle']}',
-                     itemsize: '${snapshot.data['filesize']}',
-                     itemtype: '${snapshot.data['filetype']}',
-                     itemUrl: '${snapshot.data['fileurl']}',*/
+
                                     fileName: state.sliderDetails.filetitle,
-                                    //"كتاب امتحان الجغرافيا للصف الثالث الثانوي التيرم الاول 2021",
                                     fileSize:  state.sliderDetails.filesize,
-                                    //"38.81 MB",
                                     fileType:  state.sliderDetails.filetype,
-                                    //"PDF",
                                     itemUrl: state.sliderDetails.fileurl
-                                   // ""
+
                         ),
                               ],
                             );

@@ -44,7 +44,6 @@ class _HomeViewState extends State<HomeView> {
 
   bool _isInterstitialAdReady = false;
 
-
   @override
   void initState() {
     super.initState();
@@ -57,7 +56,7 @@ class _HomeViewState extends State<HomeView> {
             _isBannerAdReady = true;
           });
         }, onAdFailedToLoad: (ad, LoadAdError error) {
-          print("Failed to Load A Banner Ad${error.message}");
+          log("Failed to Load A Banner Ad${error.message}");
           _isBannerAdReady = false;
           ad.dispose();
         }),
@@ -65,10 +64,11 @@ class _HomeViewState extends State<HomeView> {
       ..load();
     //Interstitial Ads
     InterstitialAd.load(
+
         adUnitId: AdHelper.getInterstitialAdUnitId,
         request: const AdRequest(),
-        adLoadCallback: InterstitialAdLoadCallback(onAdLoaded: (ad) {
-          _interstitialAd = ad;
+         adLoadCallback: InterstitialAdLoadCallback(onAdLoaded: (ad) {
+            _interstitialAd = ad;
           _isInterstitialAdReady = true;
         }, onAdFailedToLoad: (LoadAdError error) {
           log("failed to Load Interstitial Ad ${error.message}");
@@ -143,11 +143,8 @@ class _HomeViewState extends State<HomeView> {
                               title1: "أحداث الاضافات",
                               title2: " كل الملازم و المذكرات",
                               onTapDescription2: () {
-                                _isInterstitialAdReady ? _interstitialAd.show : "مجاااااااااااااااااااااااش";
-                                log('${ _isInterstitialAdReady ? _interstitialAd.show : "مجاااااااااااااااااااااااش"}');
-
-                                Get.to(() =>
-                                    ListOfNewestAdded(sliders: state.sliders));
+                                 log('${ _isInterstitialAdReady ? _interstitialAd.show() : "مجاااااااااااااااااااااااش"}');
+                                Get.to( () => ListOfNewestAdded(sliders: state.sliders));
                               }),
                           BannerSlider(sliders: state.sliders),
                         ],
@@ -160,7 +157,12 @@ class _HomeViewState extends State<HomeView> {
                   },
                 ),
               ),
-              const AdsSpaces(),
+              if (_isBannerAdReady)
+                SizedBox(
+                  height: _bannerAd.size.height.toDouble(),
+                  width: _bannerAd.size.width.toDouble(),
+                  child: AdWidget(ad: _bannerAd),
+                ),
               ListView.builder(
                 itemCount:selectedClassesList.length,
                 shrinkWrap: true,
@@ -229,7 +231,10 @@ class _HomeViewState extends State<HomeView> {
                 },
               ),
               if(selectedClassesList.isEmpty)
-               const Text("من فضلك اضف بعض المواد",style: TextStyle(color: Colors.black),),
+               const Padding(
+                 padding:  EdgeInsets.only(top: 20),
+                 child: Text("من فضلك أضف المرحلة والصف الدراسي", style: TextStyle(fontSize: 14, color: Colors.black, fontFamily: "Khebrat Musamim"),),
+               ),
               SizedBox(
                 height: height * 0.1,
               ),
