@@ -121,6 +121,7 @@ class _BannerDetailsViewState extends State<BannerDetailsView> {
                                 state.sliderDetails.xFeaturedMediaMedium != null?  Container(
                                   height: height * 0.4,
                                   width: width * 0.95,
+                                  margin: EdgeInsets.symmetric(vertical: 8,),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
                                     image:  DecorationImage(

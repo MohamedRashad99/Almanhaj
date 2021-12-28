@@ -28,8 +28,7 @@ class _ListOfSelectedCourseState extends State<ListOfAllSectionNotes> {
 
   @override
   Widget build(BuildContext context) {
-    // final id2 = LocalStorage.getInt("selectedClassesId");
-    // log(id2.toString());
+
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       key: scaffoldKey,
@@ -46,6 +45,7 @@ class _ListOfSelectedCourseState extends State<ListOfAllSectionNotes> {
        child: BlocConsumer<AllSectionsNotesCubit, AllSectionsNotesState>(
         listener: (context, state) {},
         builder: (context, state) {
+          final cubit = AllSectionsNotesCubit.of(context);
           if (state is AllSectionsNotesLoading) {
             return const Center(
                 child: SpinKitChasingDots(
@@ -56,7 +56,8 @@ class _ListOfSelectedCourseState extends State<ListOfAllSectionNotes> {
           if (state is AllSectionsNotesError) {
             return Center(child: Text(state.msg));
           }
-          if (state is AllSectionsNotesSuccess) {
+          if (state is AllSectionsNotesLoadingMore){
+            bool isLoadingMore = true;
             return Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -68,19 +69,94 @@ class _ListOfSelectedCourseState extends State<ListOfAllSectionNotes> {
                   height: height * 0.075,
                 ),
                 Expanded(
-                  child: ListView.builder(
-                    itemCount: state.allSectionSNotes.length,
-                    //shrinkWrap: true,
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, int index) {
-                      return CardLesson(
-                        id: state.allSectionSNotes[index].id,
-                        title1: state.allSectionSNotes[index].title.rendered,
-                        title2: state.allSectionSNotes[index].content.rendered,
-                        image:
+                  child: RefreshIndicator(
+                    onRefresh: ()=>AllSectionsNotesCubit.of(context).refresh(id: widget.id),
+                    child: ListView.builder(
+                      itemCount: state.allSectionSNotes.length,
+                      //shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (context, int index) {
+                        final isLastItem = state.allSectionSNotes.length == index + 1;
+                        if (isLastItem && cubit.canLoadMore && !isLoadingMore) {
+                          cubit.getAllSectionsNotes(id: widget.id);
+                        }
+                        if (isLastItem && cubit.canLoadMore && isLoadingMore) {
+                          return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              CardLesson(
+                                id: state.allSectionSNotes[index].id,
+                                title1: state.allSectionSNotes[index].title.rendered,
+                                title2: state.allSectionSNotes[index].content.rendered,
+                                image:
+                                state.allSectionSNotes[index].xFeaturedMediaMedium,
+                              ),
+                              const Center(child: CircularProgressIndicator.adaptive()),                            ],
+                          );
+                        } else {
+                          return CardLesson(
+                            id: state.allSectionSNotes[index].id,
+                            title1: state.allSectionSNotes[index].title.rendered,
+                            title2: state.allSectionSNotes[index].content.rendered,
+                            image:
                             state.allSectionSNotes[index].xFeaturedMediaMedium,
-                      );
-                    },
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }
+          if (state is AllSectionsNotesSuccess) {
+            bool isLoadingMore = false;
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                SizedBox(
+                  child: const SubjectHeader(
+                    title1: "جميع الملازم والمذكرات المتاحة الان",
+                    title2: "كافة المواد التعلمية",
+                  ),
+                  height: height * 0.075,
+                ),
+                Expanded(
+                  child: RefreshIndicator(
+                    onRefresh: ()=>AllSectionsNotesCubit.of(context).refresh(id: widget.id),
+                    child: ListView.builder(
+                      itemCount: state.allSectionSNotes.length,
+                      //shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (context, int index) {
+                        final isLastItem = state.allSectionSNotes.length == index + 1;
+                        if (isLastItem && cubit.canLoadMore &&!isLoadingMore) {
+                          cubit.getAllSectionsNotes(id: widget.id);
+                        }
+                        if (isLastItem && cubit.canLoadMore && isLoadingMore) {
+                          return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              CardLesson(
+                                id: state.allSectionSNotes[index].id,
+                                title1: state.allSectionSNotes[index].title.rendered,
+                                title2: state.allSectionSNotes[index].content.rendered,
+                                image:
+                                state.allSectionSNotes[index].xFeaturedMediaMedium,
+                              ),
+                              const Center(child: CircularProgressIndicator.adaptive()),                            ],
+                          );
+                        } else {
+                          return CardLesson(
+                            id: state.allSectionSNotes[index].id,
+                            title1: state.allSectionSNotes[index].title.rendered,
+                            title2: state.allSectionSNotes[index].content.rendered,
+                            image:
+                            state.allSectionSNotes[index].xFeaturedMediaMedium,
+                          );
+                        }
+                      },
+                    ),
                   ),
                 ),
               ],
