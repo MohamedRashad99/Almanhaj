@@ -30,7 +30,7 @@ class BannerSlider extends StatelessWidget {
           return InkWell(
             onTap: () {
               //  interstitialAd.show();
-              // TODO :: Im passed id of slider selected here to get more details
+
               navigateTo(context, BannerDetailsView(id: sliders[index].id,));
             },
             child: Container(

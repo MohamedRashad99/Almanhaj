@@ -73,7 +73,6 @@ class _ListOfSelectedCourseState extends State<ListOfAllSectionNotes> {
                     onRefresh: ()=>AllSectionsNotesCubit.of(context).refresh(id: widget.id),
                     child: ListView.builder(
                       itemCount: state.allSectionSNotes.length,
-                      //shrinkWrap: true,
                       physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, int index) {
                         final isLastItem = state.allSectionSNotes.length == index + 1;
@@ -91,9 +90,14 @@ class _ListOfSelectedCourseState extends State<ListOfAllSectionNotes> {
                                 image:
                                 state.allSectionSNotes[index].xFeaturedMediaMedium,
                               ),
-                              const Center(child: CircularProgressIndicator.adaptive()),                            ],
+                              const Center(
+                                  child: SpinKitChasingDots(
+                                    color: kPrimaryBlueColor,
+                                    size: 40,
+                                  ))                            ],
                           );
-                        } else {
+                        }
+                        else {
                           return CardLesson(
                             id: state.allSectionSNotes[index].id,
                             title1: state.allSectionSNotes[index].title.rendered,
@@ -144,7 +148,11 @@ class _ListOfSelectedCourseState extends State<ListOfAllSectionNotes> {
                                 image:
                                 state.allSectionSNotes[index].xFeaturedMediaMedium,
                               ),
-                              const Center(child: CircularProgressIndicator.adaptive()),                            ],
+                              const Center(
+                                  child: SpinKitChasingDots(
+                                    color: kPrimaryBlueColor,
+                                    size: 40,
+                                  ))                            ],
                           );
                         } else {
                           return CardLesson(

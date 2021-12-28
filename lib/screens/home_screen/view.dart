@@ -136,6 +136,7 @@ class _HomeViewState extends State<HomeView> {
                         size: 40,
                       ));
                     }
+
                     if (state is SliderSuccess) {
                       return Column(
                         children: [
@@ -144,7 +145,7 @@ class _HomeViewState extends State<HomeView> {
                               title2: " كل الملازم و المذكرات",
                               onTapDescription2: () {
                                  log('${ _isInterstitialAdReady ? _interstitialAd.show() : "مجاااااااااااااااااااااااش"}');
-                                Get.to( () => ListOfNewestAdded(sliders: state.sliders));
+                                Get.to( () => const ListOfNewestAdded());
                               }),
                           BannerSlider(sliders: state.sliders),
                         ],
