@@ -3,8 +3,7 @@
 import 'dart:developer';
 
 import 'package:almanhaj/config/ads_manager.dart';
-import 'package:almanhaj/screens/banner_details/cubit/slider_details_cubit.dart';
-import 'package:almanhaj/screens/banner_details/page/views/ads_spaces.dart';
+import 'cubit/slider_details_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -17,16 +16,16 @@ import '../components/constants.dart';
 import '../home_screen/page/views/speed_dial.dart';
 import '../home_screen/view.dart';
 
-class BannerDetailsView extends StatefulWidget {
+class BannerDetailsScreen extends StatefulWidget {
   final int? id;
 
-  const BannerDetailsView({Key? key, this.id}) : super(key: key);
+  const BannerDetailsScreen({Key? key, this.id}) : super(key: key);
 
   @override
-  State<BannerDetailsView> createState() => _BannerDetailsViewState();
+  State<BannerDetailsScreen> createState() => _BannerDetailsScreenState();
 }
 
-class _BannerDetailsViewState extends State<BannerDetailsView> {
+class _BannerDetailsScreenState extends State<BannerDetailsScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   /// ********************** Ads Concept *************************
   late BannerAd _bannerAd;
@@ -171,14 +170,7 @@ class _BannerDetailsViewState extends State<BannerDetailsView> {
 
   adsSpaces(double height, double width) {
     return Container(
-      // child: AdmobBanner(
-      //   adUnitId: getBannerAdUnitId()!,
-      //   adSize: bannerSize!,
-      //   listener: (AdmobAdEvent event, Map<String, dynamic>? args) {
-      //     handleEvent(event, args, 'Banner');
-      //   },
-      //   onBannerCreated: (AdmobBannerController controller) {},
-      // ),
+
       margin: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
@@ -196,7 +188,7 @@ class _BannerDetailsViewState extends State<BannerDetailsView> {
       elevation: 0.0,
       title: InkWell(
         onTap: () {
-          Get.off(() => const HomeView());
+          Get.off(() => const HomeScreen());
           //  navigateAndFinish(context,const HomeView());
         },
         child: Image.asset(

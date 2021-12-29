@@ -25,14 +25,14 @@ import 'page/views/sections_titles/section_title.dart';
 import 'page/views/speed_dial.dart';
 import 'page/views/user_section_selected/user_section_selected.dart';
 
-class HomeView extends StatefulWidget {
-  const HomeView({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  _HomeViewState createState() => _HomeViewState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomeScreenState extends State<HomeScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
   /// ********************** Ads Concept *************************
@@ -145,7 +145,7 @@ class _HomeViewState extends State<HomeView> {
                               title2: " كل الملازم و المذكرات",
                               onTapDescription2: () {
                                  log('${ _isInterstitialAdReady ? _interstitialAd.show() : "مجاااااااااااااااااااااااش"}');
-                                Get.to( () => const ListOfNewestAdded());
+                                Get.to( () => const ListOfNewestAddedScreen());
                               }),
                           BannerSlider(sliders: state.sliders),
                         ],

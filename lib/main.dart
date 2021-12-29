@@ -32,12 +32,10 @@ class Almanhaj extends StatelessWidget{
         BlocProvider(create: (context) => StagesCubit(),),
         BlocProvider(create: (context) => SliderCubit(),),
 
-
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         builder: (context, child) {
-          // TODo:: This Not Fair
           return Directionality(
             textDirection: TextDirection.ltr,
             child: child ?? const SizedBox(),

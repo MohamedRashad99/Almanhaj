@@ -3,27 +3,27 @@
 import 'dart:developer';
 
 
-import '../cubit/all_sections_notes_cubit.dart';
-import 'views/subject_header.dart';
-import '../../components/constants.dart';
-import '../../components/fast_widget.dart';
-import '../../home_screen/page/views/menue_items.dart';
-import '../../home_screen/page/views/speed_dial.dart';
-import '../../home_screen/view.dart';
-import '../../list_of_selected_course/page/views/lesson_of_card.dart';
+import 'cubit/all_sections_notes_cubit.dart';
+import 'page/views/subject_header.dart';
+import '../components/constants.dart';
+import '../components/fast_widget.dart';
+import '../home_screen/page/views/menue_items.dart';
+import '../home_screen/page/views/speed_dial.dart';
+import '../home_screen/view.dart';
+import '../list_of_selected_course/page/views/lesson_of_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class ListOfAllSectionNotes extends StatefulWidget {
+class ListOfAllSectionNotesScreen extends StatefulWidget {
   final int id;
 
-  const ListOfAllSectionNotes({Key? key,required this.id}) : super(key: key);
+  const ListOfAllSectionNotesScreen({Key? key,required this.id}) : super(key: key);
   @override
-  State<ListOfAllSectionNotes> createState() => _ListOfSelectedCourseState();
+  State<ListOfAllSectionNotesScreen> createState() => _ListOfSelectedCourseState();
 }
 
-class _ListOfSelectedCourseState extends State<ListOfAllSectionNotes> {
+class _ListOfSelectedCourseState extends State<ListOfAllSectionNotesScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -184,7 +184,7 @@ class _ListOfSelectedCourseState extends State<ListOfAllSectionNotes> {
       elevation: 0.0,
       title: InkWell(
         onTap: () {
-          navigateAndFinish(context, const HomeView());
+          navigateAndFinish(context, const HomeScreen());
         },
         child: Image.asset(
           "assets/image/logo2021-2.png",

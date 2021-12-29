@@ -4,9 +4,9 @@ import 'dart:developer';
 
 import 'package:almanhaj/config/ads_manager.dart';
 import 'package:almanhaj/local_storage/local_storage.dart';
-import 'package:almanhaj/screens/all_sections_notes/page/view.dart';
+import '../../../../all_sections_notes/view.dart';
 import 'package:almanhaj/screens/home_screen/page/views/user_section_selected/cubit_show_subjects/show_subjects_cubit.dart';
-import 'package:almanhaj/screens/list_of_subject_course/page/view.dart';
+import '../../../../list_of_subject_course/view.dart';
 import 'package:flutter/material.dart';
 import 'package:almanhaj/screens/components/constants.dart';
 import 'package:almanhaj/screens/components/fast_widget.dart';
@@ -131,7 +131,7 @@ class _UserSectionSelectedState extends State<UserSectionSelected> {
                     spaceW(5),
                     Text(
                       widget.className!,
-                      style: headingStyle.copyWith(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.black),
+                      style: headingStyle.copyWith(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.black),
                     ),
                   ],
                 ),
@@ -143,7 +143,7 @@ class _UserSectionSelectedState extends State<UserSectionSelected> {
                     widget.onTapAllNotes;
                     log('${ _isInterstitialAdReady ? _interstitialAd.show() : "مجاااااااااااااااااااااااش"}');
 
-                    Get.to(()=>ListOfAllSectionNotes(id: widget.classId,) );
+                    Get.to(()=>ListOfAllSectionNotesScreen(id: widget.classId,) );
                   },
                   child: Row(
                     children: [
@@ -241,7 +241,7 @@ class _UserSectionSelectedState extends State<UserSectionSelected> {
                               onTap: () {
                                 navigateTo(
                                     context,
-                                    ListOfCourseSelected(
+                                    ListOfCourseSelectedScreen(
                                       id: id,
                                     ));
                               },

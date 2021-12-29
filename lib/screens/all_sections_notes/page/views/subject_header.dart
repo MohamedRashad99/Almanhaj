@@ -21,19 +21,17 @@ class SubjectHeader extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: Text(
-             // "أحدث الاضافات",
-              title1,
-              style: headingStyle.copyWith(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
-                  color: HexColor("#323232")),
-            ),
+          Text(
+           // "أحدث الاضافات",
+            title1,
+            style: headingStyle.copyWith(
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+                color: HexColor("#323232")),
           ),
           Padding(
-            padding: const EdgeInsets.only(right: 8),            child: Text(
+            padding: const EdgeInsets.only(right: 14),
+            child: Text(
               parseHtmlString(
                  // " يوجد العديد من المذاكرات المراجعه النهائيه لهذا العام اغتنم الفرصه "
                 title2

@@ -15,7 +15,7 @@ class SearchCard extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     return InkWell(
       onTap: () {
-        Get.to(()=> BannerDetailsView(id: id,));
+        Get.to(()=> BannerDetailsScreen(id: id,));
       },
       child: Container(
         margin: const EdgeInsets.symmetric(

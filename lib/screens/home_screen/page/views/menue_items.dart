@@ -1,11 +1,15 @@
 // ignore_for_file: use_key_in_widget_constructors
 
+import 'dart:developer';
+
+import 'package:almanhaj/config/ads_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:almanhaj/screens/components/constants.dart';
 import 'package:almanhaj/screens/components/fast_widget.dart';
 import 'package:almanhaj/screens/home_screen/view.dart';
 import 'package:almanhaj/screens/notify_study_timing/view.dart';
-import 'package:almanhaj/screens/student_class_select/page/view.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import '../../../student_class_select/view.dart';
 
 class MenueItems extends StatefulWidget {
   @override
@@ -13,51 +17,57 @@ class MenueItems extends StatefulWidget {
 }
 
 class _MenueItemsState extends State<MenueItems> {
-  // AdmobBannerSize? bannerSize;
-  // late AdmobInterstitial interstitialAd;
-  // late AdmobReward rewardAd;
-  //
-  // void handleEvent(
-  //     AdmobAdEvent event, Map<String, dynamic>? args, String adType) {
-  //   switch (event) {
-  //     case AdmobAdEvent.rewarded:
-  //       break;
-  //     default:
-  //   }
-  // }
-  //
-  // String? getInterstitialAdUnitId() {
-  //   if (Platform.isIOS) {
-  //     return 'ca-app-pub-3940256099942544/4411468910';
-  //   } else if (Platform.isAndroid) {
-  //     return 'ca-app-pub-6460577785255164/6757169449';
-  //   }
-  //   return null;
-  // }
+  /// ********************** Ads Concept *************************
+  late BannerAd _bannerAd;
 
-  // @override
-  // void initState() {
-  //   bannerSize = AdmobBannerSize.BANNER;
-  //
-  //   interstitialAd = AdmobInterstitial(
-  //     adUnitId: getInterstitialAdUnitId()!,
-  //     listener: (AdmobAdEvent event, Map<String, dynamic>? args) {
-  //       if (event == AdmobAdEvent.closed) interstitialAd.load();
-  //       handleEvent(event, args, 'Interstitial');
-  //     },
-  //   );
-  //
-  //   interstitialAd.load();
-  //
-  //   super.initState();
-  // }
+  bool _isBannerAdReady = false;
 
-  // @override
-  // void dispose() {
-  //   interstitialAd.dispose();
-  //
-  //   super.dispose();
-  // }
+  late InterstitialAd _interstitialAd;
+
+  bool _isInterstitialAdReady = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _bannerAd = BannerAd(
+      // Change Banner Size According to Ur Need
+        size: AdSize.banner,
+        adUnitId: AdHelper.getBannerAdUnitId,
+        listener: BannerAdListener(onAdLoaded: (_) {
+          setState(() {
+            _isBannerAdReady = true;
+          });
+        }, onAdFailedToLoad: (ad, LoadAdError error) {
+          log("Failed to Load A Banner Ad${error.message}");
+          _isBannerAdReady = false;
+          ad.dispose();
+        }),
+        request: const AdRequest())
+      ..load();
+    //Interstitial Ads
+    InterstitialAd.load(
+
+        adUnitId: AdHelper.getInterstitialAdUnitId,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(onAdLoaded: (ad) {
+          _interstitialAd = ad;
+          _isInterstitialAdReady = true;
+        }, onAdFailedToLoad: (LoadAdError error) {
+          log("failed to Load Interstitial Ad ${error.message}");
+        }));
+
+
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _bannerAd.dispose();
+    _interstitialAd.dispose();
+  }
+
+  /// -----------------------------------------------------------------------
+
 
   @override
   Widget build(BuildContext context) {
@@ -90,8 +100,8 @@ class _MenueItemsState extends State<MenueItems> {
                   ListTile(
                     leading: buildIcon(Icons.house),
                     onTap: () {
-                      // interstitialAd.show();
-                      navigateAndFinish(context, const HomeView());
+                      log('${ _isInterstitialAdReady ? _interstitialAd.show() : "مجاااااااااااااااااااااااش"}');
+                      navigateAndFinish(context, const HomeScreen());
                     },
                     title: buildTextName(
                       "الرئيسية",
@@ -99,8 +109,9 @@ class _MenueItemsState extends State<MenueItems> {
                   ),
                   ListTile(
                     onTap: () {
-                      //  interstitialAd.show();
-                      navigateTo(context, StudentClassSelectView());
+                      log('${ _isInterstitialAdReady ? _interstitialAd.show() : "مجاااااااااااااااااااااااش"}');
+
+                      navigateTo(context, StudentClassSelectScreen());
                     },
                     leading: buildIcon(
                       Icons.person_add,
@@ -111,8 +122,8 @@ class _MenueItemsState extends State<MenueItems> {
                   ),
                   ListTile(
                     onTap: () {
-                      // interstitialAd.show();
-                      navigateTo(context, NotifyStudyTimingView());
+                      log('${ _isInterstitialAdReady ? _interstitialAd.show() : "مجاااااااااااااااااااااااش"}');
+                     // navigateTo(context, NotifyStudyTimingView());
                     },
                     leading: buildIcon(
                       Icons.date_range,

@@ -31,7 +31,7 @@ class BannerSlider extends StatelessWidget {
             onTap: () {
               //  interstitialAd.show();
 
-              navigateTo(context, BannerDetailsView(id: sliders[index].id,));
+              navigateTo(context, BannerDetailsScreen(id: sliders[index].id,));
             },
             child: Container(
               margin: const EdgeInsets.only(left: 10, right: 10),

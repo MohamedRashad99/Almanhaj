@@ -21,11 +21,12 @@ class ListOfCourseSelectedCubit extends Cubit<ListOfCourseSelectedState> {
 
     emit(ListOfCourseSelectedLoading());
     try {
-      final res = await NetWork.get("/categories", queryParams: {
-        'parent': '$id',
-        'per_page': '100',
+      final res = await NetWork.get("/posts", queryParams: {
+        'categories': '$id',
+        'per_page': '10',
         'orderby': 'id',
-        'order': 'asc',
+        'order': 'desc',
+        'page': 1
       });
       if (res.statusCode != HttpStatus.ok) {
         throw res.data;

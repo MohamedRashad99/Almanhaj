@@ -14,16 +14,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class ListOfCourseSelected extends StatefulWidget {
+class ListOfCourseSelectedScreen extends StatefulWidget {
   final int id;
 
-  const ListOfCourseSelected({required this.id});
+  const ListOfCourseSelectedScreen({required this.id});
 
   @override
-  State<ListOfCourseSelected> createState() => _ListOfCourseSelectedState();
+  State<ListOfCourseSelectedScreen> createState() => _ListOfCourseSelectedScreenState();
 }
 
-class _ListOfCourseSelectedState extends State<ListOfCourseSelected> {
+class _ListOfCourseSelectedScreenState extends State<ListOfCourseSelectedScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -58,21 +58,24 @@ class _ListOfCourseSelectedState extends State<ListOfCourseSelected> {
                 children: [
                   SizedBox(
                     child: const SubjectHeader(
-                      title1: '',
-                      title2: '',
+                      title1: ' يوجد العديد من المذاكرات المراجعة النهائية لهذا العام ',
+                      title2: 'أحصل علي المذكرة المفضلة لديك الاّن ',
                     ),
                     height: height * 0.075,
                   ),
                   Expanded(
                     child: ListView.builder(
                       itemCount: state.listOfCourseSelected.length,
-                      //shrinkWrap: true,
+
                       physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, int index) {
                         return  CardListOfCourseSelected(
                             id: state.listOfCourseSelected[index].id,
                             title1: state.listOfCourseSelected[index].title.rendered,
-                            image: state.listOfCourseSelected[index].xFeaturedMediaMedium);
+                            image: state.listOfCourseSelected[index].xFeaturedMediaMedium
+
+
+                        );
                       },
                     ),
                   )
@@ -115,7 +118,7 @@ class _ListOfCourseSelectedState extends State<ListOfCourseSelected> {
       elevation: 0.0,
       title: InkWell(
         onTap: () {
-          navigateAndFinish(context, const HomeView());
+          navigateAndFinish(context, const HomeScreen());
         },
         child: Image.asset(
           "assets/image/logo2021-2.png",

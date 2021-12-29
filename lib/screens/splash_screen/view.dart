@@ -7,7 +7,7 @@ import 'package:almanhaj/screens/home_screen/view.dart';
 import 'package:almanhaj/screens/student_class_select/page/card_selection/model/model.dart';
 import 'package:flutter/material.dart';
 import '../components/constants.dart';
-import '../student_class_select/page/view.dart';
+import '../student_class_select/view.dart';
 import 'package:get/get.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -24,9 +24,9 @@ class SplashScreen extends StatelessWidget {
         selectedClassesList.add(Classes(id: int.parse(key), name: value));
       });
       if(selectedClassesList.isEmpty){
-        Get.off(() => StudentClassSelectView());
+        Get.off(() => StudentClassSelectScreen());
       }else{
-        Get.off(() => const HomeView());
+        Get.off(() => const HomeScreen());
       }
     }
     );

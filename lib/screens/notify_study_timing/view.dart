@@ -78,7 +78,7 @@ class NotifyStudyTimingView extends StatelessWidget {
                       FlatButton(
                           onPressed: () async {
 
-                            Get.offAll(() => const HomeView());
+                            Get.offAll(() => const HomeScreen());
 
                           },
                           child: Text(

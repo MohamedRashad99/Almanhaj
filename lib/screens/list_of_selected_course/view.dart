@@ -1,8 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors
 
-import 'package:almanhaj/screens/list_of_selected_course/page/views/lesson_of_card.dart';
+import 'page/views/lesson_of_card.dart';
 import 'package:flutter/material.dart';
-import 'package:almanhaj/screens/banner_details/view.dart';
 import 'page/views/subject_header.dart';
 import '../components/constants.dart';
 import '../components/fast_widget.dart';
@@ -10,12 +9,12 @@ import '../home_screen/page/views/menue_items.dart';
 import '../home_screen/page/views/speed_dial.dart';
 import '../home_screen/view.dart';
 
-class ListOfSelectedCourse extends StatefulWidget {
+class ListOfSelectedCourseScreen extends StatefulWidget {
   @override
-  State<ListOfSelectedCourse> createState() => _ListOfSelectedCourseState();
+  State<ListOfSelectedCourseScreen> createState() => _ListOfSelectedCourseScreenState();
 }
 
-class _ListOfSelectedCourseState extends State<ListOfSelectedCourse> {
+class _ListOfSelectedCourseScreenState extends State<ListOfSelectedCourseScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -63,7 +62,7 @@ class _ListOfSelectedCourseState extends State<ListOfSelectedCourse> {
       elevation: 0.0,
       title: InkWell(
         onTap: () {
-          navigateAndFinish(context, const HomeView());
+          navigateAndFinish(context, const HomeScreen());
         },
         child: Image.asset(
           "assets/image/logo2021-2.png",

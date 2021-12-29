@@ -13,7 +13,7 @@ class AdHelper {
     } else if (Platform.isAndroid) {
       // test  ca-app-pub-3940256099942544/6300978111
       // real ca-app-pub-6460577785255164/7359804675
-      return 'ca-app-pub-3940256099942544/6300978111';
+      return 'ca-app-pub-6460577785255164/7359804675';
     }
     return "مجاااااااااااااش";
   }
@@ -26,7 +26,7 @@ class AdHelper {
     } else if (Platform.isAndroid) {
       //test ca-app-pub-3940256099942544/1033173712
       //real ca-app-pub-6460577785255164/4338340923
-      return 'ca-app-pub-3940256099942544/1033173712';
+      return 'ca-app-pub-6460577785255164/6757169449';
     }
     return "مجاااااااااااااااااااااش ";
   }

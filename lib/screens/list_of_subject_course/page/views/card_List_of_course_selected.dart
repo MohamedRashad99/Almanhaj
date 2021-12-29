@@ -1,6 +1,6 @@
 import 'package:almanhaj/screens/banner_details/view.dart';
 import 'package:almanhaj/screens/components/constants.dart';
-import 'package:almanhaj/screens/components/fast_widget.dart';
+import 'package:almanhaj/screens/components/custom_cached_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 class CardListOfCourseSelected extends StatelessWidget {
@@ -17,7 +17,7 @@ class CardListOfCourseSelected extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     return InkWell(
           onTap: () {
-           Get.to(()=> BannerDetailsView(id: id,));
+           Get.to(()=> BannerDetailsScreen(id: id,));
           },
           child: Container(
             margin: const EdgeInsets.symmetric(
@@ -72,14 +72,15 @@ class CardListOfCourseSelected extends StatelessWidget {
                         topRight: Radius.circular(15),
                         bottomRight: Radius.circular(15)),
                   ),
-                  child: Image.asset(
-                    image,
-                    fit: BoxFit.contain,
-                  ),
                   //customCachedNetworkImageWitoutTitle(
                   //     url: "",
                   //     context: context,
                   //     fit: BoxFit.contain)
+                  child:customCachedNetworkImageWitoutTitle(
+                      url: image,
+                       context: context,
+                      fit: BoxFit.contain)
+
                 ),
               ],
             ),

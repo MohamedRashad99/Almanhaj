@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 
-import 'package:almanhaj/screens/search_bar/page/view.dart';
+import '../search_bar/view.dart';
 import 'package:flutter/material.dart';
 import 'package:almanhaj/screens/home_screen/view.dart';
 import 'package:get/get.dart';
@@ -54,7 +54,7 @@ customAppBar({required BuildContext context, required VoidCallback press} ) {
     elevation: 0.0,
     title: InkWell(
       onTap: () {
-        Get.off(()=>const HomeView());
+        Get.off(()=>const HomeScreen());
       },
       child: Image.asset(
         "assets/image/logo2021-2.png",

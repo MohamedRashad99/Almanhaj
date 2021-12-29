@@ -2,25 +2,26 @@ import 'dart:developer';
 
 import 'package:almanhaj/config/keys.dart';
 import 'package:almanhaj/local_storage/local_storage.dart';
-import '../cubit/stages_cubit.dart';
+import 'package:almanhaj/screens/home_screen/view.dart';
+import 'cubit/stages_cubit.dart';
 import 'package:flutter/material.dart';
-import '../../components/constants.dart';
-import '../../components/default_button.dart';
-import '../../notify_study_timing/view.dart';
-import 'card_selection/model/model.dart';
-import 'views/bar_description.dart';
+import '../components/constants.dart';
+import '../components/default_button.dart';
+import '../notify_study_timing/view.dart';
+import 'page/card_selection/model/model.dart';
+import 'page/views/bar_description.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'card_selection/class_card.dart';
+import 'page/card_selection/class_card.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 // ignore: use_key_in_widget_constructors
-class StudentClassSelectView extends StatefulWidget {
+class StudentClassSelectScreen extends StatefulWidget {
   @override
-  _StudentClassSelectViewState createState() => _StudentClassSelectViewState();
+  _StudentClassSelectScreenState createState() => _StudentClassSelectScreenState();
 }
 
-class _StudentClassSelectViewState extends State<StudentClassSelectView> {
+class _StudentClassSelectScreenState extends State<StudentClassSelectScreen> {
   List<Classes> selectedClasses = GetSelectedList.getList();
 
   void onSelected(Classes classes) {
@@ -101,7 +102,7 @@ class _StudentClassSelectViewState extends State<StudentClassSelectView> {
               DefaultButton(
                   text: "تأكيد ابدء تصفح المذكرات الان",
                   press: () {
-                    Get.offAll(() => NotifyStudyTimingView());
+                    Get.offAll(() => HomeScreen());
 
                     final Map<String, dynamic> map1 = {
                       for (var e in selectedClasses) e.id.toString(): e.name
